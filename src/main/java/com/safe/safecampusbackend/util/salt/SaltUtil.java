@@ -70,11 +70,4 @@ public class SaltUtil {
         }
         return hexString.toString();
     }
-
-    public static void main(String[] args) {
-        String salt = "ef7c4191bbe4dc873f50ef6e34c360f3508ed5ad4ca6da430f22556d0c6552bb";
-        String passwd = "007";
-        String fixedSalt = "c85d145667e8b5587cd3f5a576f00004c673afe8da3c60c2da4934de4ba75428";
-        System.out.println(verifySalt(passwd, salt, fixedSalt));
-    }
 }
