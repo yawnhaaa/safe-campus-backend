@@ -44,8 +44,9 @@ public class SaltUtil {
     /**
      * 输入密码与盐，检测密码是否正确
      *
-     * @param passwd 密码
-     * @param salt   盐
+     * @param passwd    密码
+     * @param salt      盐
+     * @param fixedSalt 与盐混合密码
      * @return 验证是否正确
      */
     public static Boolean verifySalt(String passwd, String salt, String fixedSalt) {

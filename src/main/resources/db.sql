@@ -33,5 +33,5 @@ CREATE TABLE `admin`
 
 INSERT INTO admin (username, passwd, salt)
 VALUES ('admin',
-        'c85d145667e8b5587cd3f5a576f00004c673afe8da3c60c2da4934de4ba75428',
-        'ef7c4191bbe4dc873f50ef6e34c360f3508ed5ad4ca6da430f22556d0c6552bb');
+        'f5e90050be7738876e6cdbf9d0e912a9fcbda9d15a9c2bb2f15292ca0855c6f4',
+        'f716c58d2f7e8d3967b210be30f50946d8f4c05964d59ae4bf7c4aeabaa19001');
