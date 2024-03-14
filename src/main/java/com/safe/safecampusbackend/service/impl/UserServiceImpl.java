@@ -16,5 +16,6 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> getUser() {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         return userDao.selectList(queryWrapper);
+
     }
 }
