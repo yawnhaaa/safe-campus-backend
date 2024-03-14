@@ -6,8 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-@TableName("users")
 @Data
+
+@TableName("users")
 public class UserEntity {
     /**
      * 主键
