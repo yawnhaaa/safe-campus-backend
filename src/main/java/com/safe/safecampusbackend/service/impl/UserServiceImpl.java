@@ -22,6 +22,18 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
     public Result<String> register(RegisterDTO registerDTO) {
+        QueryWrapper<UserEntity> emailQueryWrapper = new QueryWrapper<>();
+        emailQueryWrapper.eq("email", registerDTO.getEmail());
+        UserEntity emailUser = userDao.selectOne(emailQueryWrapper);
+        if (emailUser != null) {
+            return ResultUtil.error(-1, "该邮箱已注册");
+        }
+        QueryWrapper<UserEntity> nameQueryWrapper = new QueryWrapper<>();
+        nameQueryWrapper.eq("name", registerDTO.getName());
+        UserEntity nameUser = userDao.selectOne(nameQueryWrapper);
+        if (nameUser != null) {
+            return ResultUtil.error(-1, "该昵称已使用");
+        }
         if (!registerDTO.getCode().equals(RedisUtil.getCache(registerDTO.getEmail()))) {
             return ResultUtil.error(-1, "验证码错误");
         }
@@ -42,14 +54,17 @@ public class UserServiceImpl implements UserService {
 
     public Result<String> login(LoginDTO loginDTO) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("email", loginDTO.getEmail());
+        queryWrapper.eq("name", loginDTO.getName());
         UserEntity user = userDao.selectOne(queryWrapper);
         if (user == null) {
-            return ResultUtil.error(-1, "不存在");
+            return ResultUtil.error(-1, "该用户不存在");
+        }
+        if (user.getIsDelete().equals(1)) {
+            return ResultUtil.error(-1, "该用户被禁用，请联系系统管理员");
         }
         String passwd = loginDTO.getPasswd();
         if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
-            return ResultUtil.success(JWTUtil.createJWT(loginDTO.getEmail(), 3600000));
+            return ResultUtil.success(JWTUtil.createJWT(loginDTO.getName(), 3600000));
         } else {
             return ResultUtil.error(-1, "密码错误");
         }

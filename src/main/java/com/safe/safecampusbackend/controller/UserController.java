@@ -3,7 +3,9 @@ package com.safe.safecampusbackend.controller;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.service.UserService;
+import com.safe.safecampusbackend.util.jwt.JWTUtil;
 import com.safe.safecampusbackend.util.result.Result;
+import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +29,12 @@ public class UserController {
     @PostMapping("/getCode")
     public Result<String> getCode(@RequestBody HashMap<String, String> request) {
         return userService.getEmailCode(request.get("email"));
+    }
+
+    @PostMapping("/verifyUser")
+    public Result<Boolean> verifyUser(@RequestBody HashMap<String, String> request) {
+        String jwt = request.get("jwt");
+        String user = request.get("user");
+        return ResultUtil.success(JWTUtil.validateJWT(jwt, user));
     }
 }
