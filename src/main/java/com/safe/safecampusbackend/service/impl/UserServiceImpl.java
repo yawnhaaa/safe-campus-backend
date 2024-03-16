@@ -1,12 +1,14 @@
 package com.safe.safecampusbackend.service.impl;
 
 import cn.hutool.extra.mail.MailUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.UserDao;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.Util;
+import com.safe.safecampusbackend.util.jwt.JWTUtil;
 import com.safe.safecampusbackend.util.redis.RedisUtil;
 import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
@@ -39,7 +41,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public Result<String> login(LoginDTO loginDTO) {
-        return ResultUtil.success("牛逼");
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", loginDTO.getEmail());
+        UserEntity user = userDao.selectOne(queryWrapper);
+        if (user == null) {
+            return ResultUtil.error(-1, "不存在");
+        }
+        String passwd = loginDTO.getPasswd();
+        if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
+            return ResultUtil.success(JWTUtil.createJWT(loginDTO.getEmail(), 3600000));
+        } else {
+            return ResultUtil.error(-1, "密码错误");
+        }
     }
 
     public Result<String> getEmailCode(String email) {
