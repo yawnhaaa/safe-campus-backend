@@ -2,11 +2,15 @@ package com.safe.safecampusbackend.service.impl;
 
 import cn.hutool.extra.mail.MailUtil;
 import com.safe.safecampusbackend.dao.UserDao;
+import com.safe.safecampusbackend.model.dto.LoginDTO;
+import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.redis.RedisUtil;
 import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
+import com.safe.safecampusbackend.util.salt.SaltUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,29 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+
+    public Result<String> register(RegisterDTO registerDTO) {
+        if (!registerDTO.getCode().equals(RedisUtil.getCache(registerDTO.getEmail()))) {
+            return ResultUtil.error(-1, "验证码错误");
+        }
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(registerDTO.getName());
+        userEntity.setEmail(registerDTO.getEmail());
+        String salt = SaltUtil.generateSalt();
+        String passwd = SaltUtil.fixedSalt(registerDTO.getPasswd(), salt);
+        userEntity.setPasswd(passwd);
+        userEntity.setSalt(salt);
+        try {
+            userDao.insert(userEntity);
+            return ResultUtil.success("注册成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络原因，注册失败");
+        }
+    }
+
+    public Result<String> login(LoginDTO loginDTO) {
+        return ResultUtil.success("牛逼");
+    }
 
     public Result<String> getEmailCode(String email) {
         if (!Util.validateEmail(email)) {
