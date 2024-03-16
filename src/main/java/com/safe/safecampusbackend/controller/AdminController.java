@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class AdminController {
     private final AdminLoginService adminLoginService;
+
     @PostMapping("/aLogin")
-    public Result<String> loginGetJWT(@RequestBody AdminLoginDTO adminLoginDTO){
+    public Result<String> loginGetJWT(@RequestBody AdminLoginDTO adminLoginDTO) {
         return adminLoginService.loginGetJWT(adminLoginDTO);
     }
 }

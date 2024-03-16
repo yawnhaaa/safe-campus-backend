@@ -1,5 +1,6 @@
 package com.safe.safecampusbackend.util;
 
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,5 +17,16 @@ public class Util {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+    /**
+     * 取得 6 位验证码（000000 - 999999）
+     *
+     * @return 6位验证码
+     */
+    public static String getCode() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(1000000); // 生成 [0, 999999] 范围内的随机数
+        return String.format("%06d", randomNumber); // 补齐到六位数并转换为字符串
     }
 }
