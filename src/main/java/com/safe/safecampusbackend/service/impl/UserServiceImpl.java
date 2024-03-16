@@ -59,6 +59,12 @@ public class UserServiceImpl implements UserService {
         if (!Util.validateEmail(email)) {
             return ResultUtil.error(-1, "邮箱格式错误");
         }
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", email);
+        UserEntity user = userDao.selectOne(queryWrapper);
+        if (user != null) {
+            return ResultUtil.error(-1, "该邮箱已注册");
+        }
         String code = Util.getCode();
         RedisUtil.setCache(email, 300, code);
         MailUtil.send(email, "反诈校园验证码", "<html><body><h1>您的验证码为：" + code + "</h1><h4>五分钟内有效</h4></body></html>", true);
