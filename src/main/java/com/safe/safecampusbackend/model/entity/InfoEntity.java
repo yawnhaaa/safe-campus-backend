@@ -49,13 +49,13 @@ public class InfoEntity {
     /**
      * 资讯点赞数
      */
-    @TableField("like")
-    private Integer like;
+    @TableField("info_like")
+    private Integer infoLike;
     /**
      * 资讯收藏数
      */
-    @TableField("collect")
-    private Integer collect;
+    @TableField("info_collect")
+    private Integer infoCollect;
     /**
      * 逻辑删除: 0 可用, 1 不可用
      */

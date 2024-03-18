@@ -12,6 +12,6 @@ public class InfoVO {
     private String author;
     private String author_id;
     private Date infoDate;
-    private Integer like;
-    private Integer collect;
+    private Integer infoLike;
+    private Integer infoCollect;
 }

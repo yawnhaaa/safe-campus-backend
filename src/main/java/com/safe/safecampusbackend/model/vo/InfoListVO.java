@@ -11,6 +11,6 @@ public class InfoListVO {
     private String content;
     private String author;
     private Date infoDate;
-    private Integer like;
+    private Integer infoLike;
     private String img;
 }
