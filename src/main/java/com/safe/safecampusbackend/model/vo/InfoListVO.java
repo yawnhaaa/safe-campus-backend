@@ -10,7 +10,7 @@ public class InfoListVO {
     private String title;
     private String content;
     private String author;
-    private Date infoDate;
+    private String infoDate;
     private Integer infoLike;
     private String img;
 }

@@ -11,7 +11,7 @@ public class InfoVO {
     private String content;
     private String author;
     private String author_id;
-    private Date infoDate;
+    private String infoDate;
     private Integer infoLike;
     private Integer infoCollect;
 }

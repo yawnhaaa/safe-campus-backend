@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +24,10 @@ public class InfoServiceImpl implements InfoService {
                 .map(infoEntity -> {
                     InfoListVO infoListVO = new InfoListVO();
                     BeanUtils.copyProperties(infoEntity, infoListVO);
+                    // 使用 SimpleDateFormat 将日期格式化为年月日
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = sdf.format(infoEntity.getInfoDate());
+                    infoListVO.setInfoDate(formattedDate);  // 转换为字符串形式的年月日
                     return infoListVO;
                 })
                 .toList();
