@@ -35,3 +35,20 @@ INSERT INTO admin (username, passwd, salt)
 VALUES ('admin',
         'f5e90050be7738876e6cdbf9d0e912a9fcbda9d15a9c2bb2f15292ca0855c6f4',
         'f716c58d2f7e8d3967b210be30f50946d8f4c05964d59ae4bf7c4aeabaa19001');
+
+DROP TABLE IF EXISTS `info`;
+
+CREATE TABLE `info`
+(
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `title` varchar(20) NOT NULL COMMENT '资讯标题',
+    `author` varchar(10) NOT NULL COMMENT '资讯作者',
+    `author_id` bigint(20) NOT NULL COMMENT '资讯作者主键',
+    `info_date` DATE NOT NULL COMMENT '资讯发布时间',
+    `content` TEXT NOT NULL COMMENT '资讯内容',
+    `img` varchar(20) NOT NULL COMMENT '图片地址',
+    `like` int(10) NOT NULL COMMENT '点赞数',
+    `collect` int(10) NOT NULL COMMENT '收藏数',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+)
