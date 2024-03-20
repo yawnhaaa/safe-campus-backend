@@ -2,8 +2,6 @@ package com.safe.safecampusbackend.model.vo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 public class InfoVO {
     private Long id;
