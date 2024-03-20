@@ -10,7 +10,7 @@ public class InfoVO {
     private String title;
     private String content;
     private String author;
-    private String author_id;
+    private Long authorId;
     private String infoDate;
     private Integer infoLike;
     private Integer infoCollect;
