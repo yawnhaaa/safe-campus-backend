@@ -1,6 +1,7 @@
 package com.safe.safecampusbackend.service.impl;
 
 import com.safe.safecampusbackend.dao.InfoDAO;
+import com.safe.safecampusbackend.model.dto.InfoUserDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.vo.InfoListVO;
 import com.safe.safecampusbackend.model.vo.InfoVO;
@@ -59,5 +60,15 @@ public class InfoServiceImpl implements InfoService {
         } else {
             return ResultUtil.error(-1, "无此资讯");
         }
+    }
+
+    /**
+     * 用户点赞、收藏资讯操作
+     *
+     * @param infoUserDTO 用户id、资讯id、操作类型：0喜欢、1收藏
+     * @return 成功与失败，靠code区分
+     */
+    public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
+
     }
 }
