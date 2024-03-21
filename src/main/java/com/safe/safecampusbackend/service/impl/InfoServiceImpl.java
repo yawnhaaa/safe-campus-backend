@@ -5,10 +5,12 @@ import com.safe.safecampusbackend.dao.InfoDAO;
 import com.safe.safecampusbackend.dao.InfoUserDAO;
 import com.safe.safecampusbackend.dao.UserDao;
 import com.safe.safecampusbackend.model.dto.InfoUserDTO;
+import com.safe.safecampusbackend.model.dto.InfoUserStatusDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.InfoUserEntity;
 import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.model.vo.InfoListVO;
+import com.safe.safecampusbackend.model.vo.InfoUserStatusVO;
 import com.safe.safecampusbackend.model.vo.InfoVO;
 import com.safe.safecampusbackend.service.InfoService;
 import com.safe.safecampusbackend.util.Util;
@@ -74,7 +76,7 @@ public class InfoServiceImpl implements InfoService {
     /**
      * 用户点赞、收藏资讯操作
      *
-     * @param infoUserDTO 用户id、资讯id、操作类型：0喜欢、1收藏
+     * @param infoUserDTO 用户昵称、资讯id、操作类型：0喜欢、1收藏
      * @return 成功与失败，靠code区分
      */
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
@@ -128,5 +130,15 @@ public class InfoServiceImpl implements InfoService {
                 return ResultUtil.error(-1, "网络错误");
             }
         }
+    }
+
+    /**
+     * 获取用户点赞、收藏状态
+     *
+     * @param infoUserStatusDTO 用户昵称、资讯id
+     * @return 点赞、收藏状态
+     */
+    public Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO) {
+
     }
 }

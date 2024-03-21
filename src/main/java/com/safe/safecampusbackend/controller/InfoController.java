@@ -1,7 +1,9 @@
 package com.safe.safecampusbackend.controller;
 
 import com.safe.safecampusbackend.model.dto.InfoUserDTO;
+import com.safe.safecampusbackend.model.dto.InfoUserStatusDTO;
 import com.safe.safecampusbackend.model.vo.InfoListVO;
+import com.safe.safecampusbackend.model.vo.InfoUserStatusVO;
 import com.safe.safecampusbackend.model.vo.InfoVO;
 import com.safe.safecampusbackend.service.InfoService;
 import com.safe.safecampusbackend.util.result.Result;
@@ -28,5 +30,10 @@ public class InfoController {
     @PostMapping("/handleInfo")
     public Result<String> handleInfo(@RequestBody InfoUserDTO infoUserDTO){
         return infoService.handleInfo(infoUserDTO);
+    }
+
+    @PostMapping("/getInfoUserStatus")
+    public Result<InfoUserStatusVO> getInfoUserStatus(@RequestBody InfoUserStatusDTO infoUserStatusDTO){
+        return infoService.getInfoUserStatus(infoUserStatusDTO);
     }
 }

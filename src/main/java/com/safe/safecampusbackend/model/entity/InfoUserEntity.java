@@ -17,7 +17,7 @@ public class InfoUserEntity {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 用户id
+     * 用户昵称
      */
     @TableField("user_name")
     private String userName;
