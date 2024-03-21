@@ -80,22 +80,22 @@ public class InfoServiceImpl implements InfoService {
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("id", infoUserDTO.getUserId());
+        userQueryWrapper.eq("name", infoUserDTO.getUserName());
         UserEntity user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
         }
         // 检查资讯是否存在
         QueryWrapper<InfoEntity> infoQueryWrapper = new QueryWrapper<>();
-        infoQueryWrapper.eq("id", infoUserDTO.getUserId());
+        infoQueryWrapper.eq("id", infoUserDTO.getInfoId());
         InfoEntity info = infoDAO.selectOne(infoQueryWrapper);
         if (info == null) {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserDTO.getUserId().toString(), infoUserDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserDTO.getUserName(), infoUserDTO.getInfoId().toString());
         InfoUserEntity entity = new InfoUserEntity();
-        entity.setUserId(infoUserDTO.getUserId());
+        entity.setUserName(infoUserDTO.getUserName());
         entity.setInfoId(infoUserDTO.getInfoId());
         entity.setInfoUserId(compoundId);
         // 获取当前时间

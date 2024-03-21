@@ -45,22 +45,9 @@ public class Util {
      * 分开复合id
      *
      * @param compoundId 复合id
-     * @return 用户id与内容id的数组，0为用户id
+     * @return 用户id与内容id的数组，0为用户昵称
      */
-    public static Long[] decompoundId(String compoundId) {
-        String[] parts = compoundId.split("_");
-        if (parts.length == 2) {
-            try {
-                Long userId = Long.parseLong(parts[0]);
-                Long itemId = Long.parseLong(parts[1]);
-                return new Long[]{userId, itemId};
-            } catch (NumberFormatException e) {
-                // 处理解析异常
-                return null;
-            }
-        } else {
-            // 处理非法格式
-            return null;
-        }
+    public static String[] decompoundId(String compoundId) {
+        return compoundId.split("_");
     }
 }
