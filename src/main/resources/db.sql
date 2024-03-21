@@ -76,3 +76,19 @@ VALUES ('新闻资讯 1', '阿豪', 1, '2024-3-18', 5222, 111,
         '这这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l里是正文内容l'),
        ('新闻资讯 11', '阿豪11', 11, '2024-3-18', 2, 11,
         '这这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l这里是正文内容l里是正文内容l');
+
+DROP TABLE IF EXISTS `info_user`;
+
+CREATE TABLE `info_user`
+(
+    id bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+    user_id bigint(20) NOT NULL COMMENT '用户id',
+    info_id bigint(20) NOT NULL COMMENT '资讯id',
+    user_info_id varchar(100) NOT NULL  COMMENT '复合id',
+    is_like tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否喜欢',
+    like_time datetime NOT NULL COMMENT '喜欢时间',
+    is_collect tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否收藏',
+    collect_time datetime NOT NULL COMMENT '收藏时间',
+    UNIQUE KEY `unique_user_info_id` (`user_info_id`),
+    PRIMARY KEY (`id`)
+)
