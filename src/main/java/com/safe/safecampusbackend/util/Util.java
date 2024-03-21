@@ -40,14 +40,4 @@ public class Util {
     public static String compoundId(String userId, String itemId) {
         return userId + '_' + itemId;
     }
-
-    /**
-     * 分开复合id
-     *
-     * @param compoundId 复合id
-     * @return 用户id与内容id的数组，0为用户昵称
-     */
-    public static String[] decompoundId(String compoundId) {
-        return compoundId.split("_");
-    }
 }
