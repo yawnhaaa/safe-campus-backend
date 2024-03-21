@@ -139,6 +139,34 @@ public class InfoServiceImpl implements InfoService {
      * @return 点赞、收藏状态
      */
     public Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO) {
-
+        // 检查用户是否存在
+        QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("name", infoUserStatusDTO.getUserName());
+        UserEntity user = userDao.selectOne(userQueryWrapper);
+        if (user == null) {
+            return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
+        }
+        // 检查资讯是否存在
+        QueryWrapper<InfoEntity> infoQueryWrapper = new QueryWrapper<>();
+        infoQueryWrapper.eq("id", infoUserStatusDTO.getInfoId());
+        InfoEntity info = infoDAO.selectOne(infoQueryWrapper);
+        if (info == null) {
+            return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
+        }
+        // 生成复合id
+        String compoundId = Util.compoundId(infoUserStatusDTO.getUserName(), infoUserStatusDTO.getInfoId().toString());
+        // 检查复合id是否存在
+        QueryWrapper<InfoUserEntity> infoUserQueryWrapper = new QueryWrapper<>();
+        infoUserQueryWrapper.eq("info_user_id", compoundId);
+        InfoUserEntity infoUserEntity = infoUserDAO.selectOne(infoUserQueryWrapper);
+        InfoUserStatusVO entity = new InfoUserStatusVO();
+        if (infoUserEntity == null) {
+            entity.setLikeStatus(false);
+            entity.setLikeStatus(false);
+        } else {
+            entity.setLikeStatus(infoUserEntity.getIsLike().equals(1));
+            entity.setCollectStatus(infoUserEntity.getIsCollect().equals(1));
+        }
+        return ResultUtil.success(entity);
     }
 }
