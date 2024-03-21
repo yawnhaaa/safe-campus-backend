@@ -29,4 +29,38 @@ public class Util {
         int randomNumber = random.nextInt(1000000); // 生成 [0, 999999] 范围内的随机数
         return String.format("%06d", randomNumber); // 补齐到六位数并转换为字符串
     }
+
+    /**
+     * 复合用户id与内容id
+     *
+     * @param userId 用户id
+     * @param itemId 内容id
+     * @return 复合id
+     */
+    public static String compoundId(String userId, String itemId) {
+        return userId + '_' + itemId;
+    }
+
+    /**
+     * 分开复合id
+     *
+     * @param compoundId 复合id
+     * @return 用户id与内容id的数组，0为用户id
+     */
+    public static Long[] decompoundId(String compoundId) {
+        String[] parts = compoundId.split("_");
+        if (parts.length == 2) {
+            try {
+                Long userId = Long.parseLong(parts[0]);
+                Long itemId = Long.parseLong(parts[1]);
+                return new Long[]{userId, itemId};
+            } catch (NumberFormatException e) {
+                // 处理解析异常
+                return null;
+            }
+        } else {
+            // 处理非法格式
+            return null;
+        }
+    }
 }

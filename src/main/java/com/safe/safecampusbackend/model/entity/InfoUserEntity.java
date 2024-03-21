@@ -29,8 +29,8 @@ public class InfoUserEntity {
     /**
      * 复合id
      */
-    @TableField("user_info_id")
-    private Long userInfoId;
+    @TableField("info_user_id")
+    private String infoUserId;
     /**
      * 是否喜欢
      */

@@ -7,4 +7,5 @@ public class InfoUserDTO {
     private Long userId;
     private Long infoId;
     private int type;
+    private Boolean isStatus;
 }
