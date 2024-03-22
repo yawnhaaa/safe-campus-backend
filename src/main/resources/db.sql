@@ -81,14 +81,31 @@ DROP TABLE IF EXISTS `info_user`;
 
 CREATE TABLE `info_user`
 (
-    id bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-    user_name varchar(10) NOT NULL COMMENT '用户昵称',
-    info_id bigint(20) NOT NULL COMMENT '资讯id',
-    info_user_id varchar(100) NOT NULL  COMMENT '复合id',
-    is_like tinyint(1) DEFAULT 0 COMMENT '是否喜欢',
-    like_time datetime COMMENT '喜欢时间',
-    is_collect tinyint(1) DEFAULT 0 COMMENT '是否收藏',
+    id           bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
+    user_name    varchar(10)  NOT NULL COMMENT '用户昵称',
+    info_id      bigint(20)   NOT NULL COMMENT '资讯id',
+    info_user_id varchar(100) NOT NULL COMMENT '复合id',
+    is_like      tinyint(1) DEFAULT 0 COMMENT '是否喜欢',
+    like_time    datetime COMMENT '喜欢时间',
+    is_collect   tinyint(1) DEFAULT 0 COMMENT '是否收藏',
     collect_time datetime COMMENT '收藏时间',
     UNIQUE KEY `unique_info_user_id` (`info_user_id`),
+    PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `comment`;
+
+CREATE TABLE `comment`
+(
+    id             bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
+    info_id        bigint(20)   NOT NULL COMMENT '资讯id',
+    comment        varchar(100) NOT NULL COMMENT '评论内容',
+    comment_id     bigint(20)   NOT NULL COMMENT '评论人id',
+    comment_name   varchar(10)  NOT NULL COMMENT '评论人昵称',
+    commented_id   bigint(20) COMMENT '被评论人id',
+    commented_name varchar(10) COMMENT '被评论人昵称',
+    top_id         bigint(20) COMMENT '顶级评论id',
+    comment_time   datetime     NOT NULL COMMENT '评论时间',
+    is_delete      tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 )

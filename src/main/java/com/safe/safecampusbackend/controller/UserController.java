@@ -2,6 +2,7 @@ package com.safe.safecampusbackend.controller;
 
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.vo.JWTVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
 import com.safe.safecampusbackend.util.result.Result;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public Result<String> login(@RequestBody LoginDTO loginDTO) {
+    public Result<JWTVO> login(@RequestBody LoginDTO loginDTO) {
         return userService.login(loginDTO);
     }
 

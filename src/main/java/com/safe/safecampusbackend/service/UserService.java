@@ -2,6 +2,7 @@ package com.safe.safecampusbackend.service;
 
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.vo.JWTVO;
 import com.safe.safecampusbackend.util.result.Result;
 
 public interface UserService {
@@ -19,7 +20,7 @@ public interface UserService {
      * @param loginDTO 用户登录表单
      * @return 登录结果
      */
-    Result<String> login(LoginDTO loginDTO);
+    Result<JWTVO> login(LoginDTO loginDTO);
 
     /**
      * 给注册邮箱发送邮件并返回发送情况

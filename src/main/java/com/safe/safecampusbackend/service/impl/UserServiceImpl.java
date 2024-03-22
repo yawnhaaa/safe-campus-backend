@@ -6,6 +6,7 @@ import com.safe.safecampusbackend.dao.UserDao;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.entity.UserEntity;
+import com.safe.safecampusbackend.model.vo.JWTVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Result<String> login(LoginDTO loginDTO) {
+    public Result<JWTVO> login(LoginDTO loginDTO) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", loginDTO.getName());
         UserEntity user = userDao.selectOne(queryWrapper);
@@ -64,7 +65,11 @@ public class UserServiceImpl implements UserService {
         }
         String passwd = loginDTO.getPasswd();
         if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
-            return ResultUtil.success(JWTUtil.createJWT(loginDTO.getName(), 3600000));
+            JWTVO jwtvo = new JWTVO();
+            jwtvo.setJwt(JWTUtil.createJWT(loginDTO.getName(), 3600000));
+            jwtvo.setUserName(user.getName());
+            jwtvo.setUserId(user.getId());
+            return ResultUtil.success(jwtvo);
         } else {
             return ResultUtil.error(-1, "密码错误");
         }
