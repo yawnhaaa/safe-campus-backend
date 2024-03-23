@@ -27,13 +27,14 @@ public class MaterialServiceImpl implements MaterialService {
         if (materialEntityList != null && !materialEntityList.isEmpty()) {
             List<MaterialListVO> materialListVOList = new ArrayList<>();
             for (MaterialEntity materialEntity : materialEntityList) {
-                MaterialListVO materialListVO = new MaterialListVO();
-                try {
-                    BeanUtils.copyProperties(materialEntity, materialListVO);
-                    materialListVOList.add(materialListVO);
-                } catch (Exception e) {
-                    // 复制属性发生异常
-                    e.printStackTrace();
+                if (materialEntity.getIsDelete() == 0) { // 根据 is_delete 字段进行判断
+                    MaterialListVO materialListVO = new MaterialListVO();
+                    try {
+                        BeanUtils.copyProperties(materialEntity, materialListVO);
+                        materialListVOList.add(materialListVO);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             return ResultUtil.success(materialListVOList);
@@ -49,13 +50,15 @@ public class MaterialServiceImpl implements MaterialService {
         if (materialEntityList != null && !materialEntityList.isEmpty()) {
             List<MaterialListVO> materialListVOList = new ArrayList<>();
             for (MaterialEntity materialEntity : materialEntityList) {
-                MaterialListVO materialListVO = new MaterialListVO();
-                try {
-                    BeanUtils.copyProperties(materialEntity, materialListVO);
-                    materialListVOList.add(materialListVO);
-                } catch (Exception e) {
-                    // 复制属性发生异常
-                    e.printStackTrace();
+                if (materialEntity.getIsDelete() == 0) { // 根据 is_delete 字段进行判断
+                    MaterialListVO materialListVO = new MaterialListVO();
+                    try {
+                        BeanUtils.copyProperties(materialEntity, materialListVO);
+                        materialListVOList.add(materialListVO);
+                    } catch (Exception e) {
+                        // 复制属性发生异常
+                        e.printStackTrace();
+                    }
                 }
             }
             return ResultUtil.success(materialListVOList);
@@ -71,13 +74,15 @@ public class MaterialServiceImpl implements MaterialService {
         if (materialEntityList != null && !materialEntityList.isEmpty()) {
             List<MaterialListVO> materialListVOList = new ArrayList<>();
             for (MaterialEntity materialEntity : materialEntityList) {
-                MaterialListVO materialListVO = new MaterialListVO();
-                try {
-                    BeanUtils.copyProperties(materialEntity, materialListVO);
-                    materialListVOList.add(materialListVO);
-                } catch (Exception e) {
-                    // 复制属性发生异常
-                    e.printStackTrace();
+                if (materialEntity.getIsDelete() == 0) { // 根据 is_delete 字段进行判断
+                    MaterialListVO materialListVO = new MaterialListVO();
+                    try {
+                        BeanUtils.copyProperties(materialEntity, materialListVO);
+                        materialListVOList.add(materialListVO);
+                    } catch (Exception e) {
+                        // 复制属性发生异常
+                        e.printStackTrace();
+                    }
                 }
             }
             return ResultUtil.success(materialListVOList);
@@ -89,6 +94,9 @@ public class MaterialServiceImpl implements MaterialService {
     public Result<MaterialVO> getMaterial(Long id) {
         MaterialEntity entity = materialDAO.selectById(id);
         if (entity != null) {
+            if (entity.getIsDelete() != 0) {
+                return ResultUtil.error(-1, "无此素材");
+            }
             MaterialVO materialVO = new MaterialVO();
             BeanUtils.copyProperties(entity, materialVO);
             return ResultUtil.success(materialVO);
@@ -100,6 +108,9 @@ public class MaterialServiceImpl implements MaterialService {
         MaterialEntity entity = materialDAO.selectById(id);
         if (entity == null) {
             return ResultUtil.error(-1, "网络错误");
+        }
+        if (entity.getIsDelete() != 0) {
+            return ResultUtil.error(-1, "无此素材");
         }
         int num = entity.getDownload();
         entity.setDownload(++num);

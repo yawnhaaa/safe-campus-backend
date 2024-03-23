@@ -39,6 +39,7 @@ public class InfoServiceImpl implements InfoService {
     public Result<List<InfoListVO>> getInfoList() {
         List<InfoEntity> infoEntityList = infoDAO.selectList(null);
         List<InfoListVO> infoListVOList = infoEntityList.stream()
+                .filter(infoEntity -> infoEntity.getIsDelete() == 0)
                 .map(infoEntity -> {
                     InfoListVO infoListVO = new InfoListVO();
                     BeanUtils.copyProperties(infoEntity, infoListVO);
@@ -61,6 +62,9 @@ public class InfoServiceImpl implements InfoService {
     public Result<InfoVO> getInfoById(String id) {
         InfoEntity infoEntity = infoDAO.selectById(id);
         if (infoEntity != null) {
+            if (infoEntity.getIsDelete() != 0) {
+                return ResultUtil.error(-1, "无此资讯");
+            }
             InfoVO infoVO = new InfoVO();
             BeanUtils.copyProperties(infoEntity, infoVO);
             // 使用 SimpleDateFormat 将日期格式化为年月日

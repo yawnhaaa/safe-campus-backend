@@ -60,5 +60,5 @@ public class MaterialEntity {
      * 逻辑删除
      */
     @TableField("is_delete")
-    private String isDelete;
+    private Integer isDelete;
 }
