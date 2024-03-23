@@ -108,4 +108,26 @@ CREATE TABLE `comment`
     comment_time   datetime     NOT NULL COMMENT '评论时间',
     is_delete      tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
-)
+);
+
+DROP TABLE IF EXISTS `material`;
+
+CREATE TABLE `material`
+(
+    id            bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
+    src           varchar(100) NOT NULL COMMENT '素材路径',
+    img_src       varchar(100) COMMENT '列表图片路径',
+    title         varchar(20)  NOT NULL COMMENT '素材标题',
+    author        varchar(10)  NOT NULL COMMENT '作者',
+    author_id     bigint(20)   NOT NULL COMMENT '作者id',
+    material_date datetime     NOT NULL COMMENT '发布日期',
+    material_type tinyint(1)   NOT NULL COMMENT '素材类型：0图、1视频、2音频',
+    download      int(10)    DEFAULT 0 COMMENT '下载次数',
+    is_delete     tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+);
+
+INSERT INTO material (src, title, author, author_id, material_date, material_type)
+VALUES ('/audios/music.mp3', '枫', '周杰伦', '1', '2024-03-23 13:08:42', 2),
+       ('/images/fanzha.jpg', '坚持反诈不动摇', '帅气程序员', '1', '2024-03-23 13:08:42', 0),
+       ('/videos/video.mp4', '反诈工作贯彻到底', '帅气发布者', '1', '2024-03-23 13:08:42', 1);
