@@ -128,6 +128,6 @@ CREATE TABLE `material`
 );
 
 INSERT INTO material (src, title, author, author_id, material_date, material_type)
-VALUES ('/audios/music.mp3', '枫', '周杰伦', '1', '2024-03-23 13:08:42', 2),
-       ('/images/fanzha.jpg', '坚持反诈不动摇', '帅气程序员', '1', '2024-03-23 13:08:42', 0),
-       ('/videos/video.mp4', '反诈工作贯彻到底', '帅气发布者', '1', '2024-03-23 13:08:42', 1);
+VALUES ('music.mp3', '枫', '周杰伦', '1', '2024-03-23 13:08:42', 2),
+       ('fanzha.jpg', '坚持反诈不动摇', '帅气程序员', '1', '2024-03-23 13:08:42', 0),
+       ('video.mp4', '反诈工作贯彻到底', '帅气发布者', '1', '2024-03-23 13:08:42', 1);

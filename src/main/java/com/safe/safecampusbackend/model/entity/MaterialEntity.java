@@ -55,7 +55,7 @@ public class MaterialEntity {
      * 下载次数
      */
     @TableField("download")
-    private String download;
+    private Integer download;
     /**
      * 逻辑删除
      */

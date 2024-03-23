@@ -95,4 +95,19 @@ public class MaterialServiceImpl implements MaterialService {
         }
         return ResultUtil.error(-1, "网络错误");
     }
+
+    public Result<String> downloadMaterial(Long id) {
+        MaterialEntity entity = materialDAO.selectById(id);
+        if (entity == null) {
+            return ResultUtil.error(-1, "网络错误");
+        }
+        int num = entity.getDownload();
+        entity.setDownload(++num);
+        try {
+            materialDAO.updateById(entity);
+            return ResultUtil.success("下载成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "下载失败");
+        }
+    }
 }

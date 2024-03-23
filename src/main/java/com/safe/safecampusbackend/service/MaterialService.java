@@ -35,4 +35,12 @@ public interface MaterialService {
      * @return 素材相关信息
      */
     Result<MaterialVO> getMaterial(Long id);
+
+    /**
+     * 下载增加下载次数
+     *
+     * @param id 素材id
+     * @return 成功与否
+     */
+    Result<String> downloadMaterial(Long id);
 }

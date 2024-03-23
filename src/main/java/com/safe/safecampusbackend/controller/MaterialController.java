@@ -35,4 +35,9 @@ public class MaterialController {
     public Result<MaterialVO> getMaterial(@PathVariable Long id) {
         return materialService.getMaterial(id);
     }
+
+    @GetMapping("/downloadMaterial/{id}")
+    public Result<String> downloadMaterial(@PathVariable Long id) {
+        return materialService.downloadMaterial(id);
+    }
 }

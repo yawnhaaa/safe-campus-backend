@@ -11,4 +11,5 @@ public class MaterialListVO {
     private String title;
     private String author;
     private Date materialDate;
+    private String materialType;
 }
