@@ -47,9 +47,9 @@ CREATE TABLE `info`
     `info_date`    DATE        NOT NULL COMMENT '资讯发布时间',
     `content`      TEXT        NOT NULL COMMENT '资讯内容',
     `img`          varchar(20) COMMENT '图片地址',
-    `info_like`    int(10)     NOT NULL DEFAULT 0 COMMENT '点赞数',
-    `info_collect` int(10)     NOT NULL DEFAULT 0 COMMENT '收藏数',
-    `is_delete`    tinyint(1)  NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+    `info_like`    int(10)    DEFAULT 0 COMMENT '点赞数',
+    `info_collect` int(10)    DEFAULT 0 COMMENT '收藏数',
+    `is_delete`    tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 );
 

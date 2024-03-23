@@ -6,6 +6,7 @@ import com.safe.safecampusbackend.dao.InfoUserDAO;
 import com.safe.safecampusbackend.dao.UserDao;
 import com.safe.safecampusbackend.model.dto.InfoUserDTO;
 import com.safe.safecampusbackend.model.dto.InfoUserStatusDTO;
+import com.safe.safecampusbackend.model.dto.IssueInfoDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.InfoUserEntity;
 import com.safe.safecampusbackend.model.entity.UserEntity;
@@ -172,5 +173,31 @@ public class InfoServiceImpl implements InfoService {
             entity.setCollectStatus(infoUserEntity.getIsCollect().equals(1));
         }
         return ResultUtil.success(entity);
+    }
+
+    public Result<String> issueInfo(IssueInfoDTO issueInfoDTO) {
+        if (issueInfoDTO.getTitle() == null) {
+            return ResultUtil.error(-1, "标题不能为空");
+        }
+        if (issueInfoDTO.getAuthor() == null) {
+            return ResultUtil.error(-1, "作者昵称不能为空");
+        }
+        if (issueInfoDTO.getAuthorId() == null) {
+            return ResultUtil.error(-1, "作者id不能为空");
+        }
+        if (issueInfoDTO.getContent() == null) {
+            return ResultUtil.error(-1, "资讯内容不能为空");
+        }
+        InfoEntity entity = new InfoEntity();
+        BeanUtils.copyProperties(issueInfoDTO, entity);
+        Date currentTime = new Date();
+        entity.setIsDelete(1);
+        entity.setInfoDate(currentTime);
+        try {
+            infoDAO.insert(entity);
+            return ResultUtil.success("等待审核");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 }
