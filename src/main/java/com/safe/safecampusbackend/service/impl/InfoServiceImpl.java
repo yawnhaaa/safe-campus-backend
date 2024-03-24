@@ -188,6 +188,9 @@ public class InfoServiceImpl implements InfoService {
         if (issueInfoDTO.getContent() == null) {
             return ResultUtil.error(-1, "资讯内容不能为空");
         }
+        if (issueInfoDTO.getFile() != null){
+            System.out.println("hello");
+        }
         InfoEntity entity = new InfoEntity();
         BeanUtils.copyProperties(issueInfoDTO, entity);
         Date currentTime = new Date();
