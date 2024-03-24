@@ -2,6 +2,7 @@ package com.safe.safecampusbackend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.MaterialDAO;
+import com.safe.safecampusbackend.model.dto.IssueMaterialDTO;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
 import com.safe.safecampusbackend.model.vo.MaterialListVO;
 import com.safe.safecampusbackend.model.vo.MaterialVO;
@@ -120,5 +121,9 @@ public class MaterialServiceImpl implements MaterialService {
         } catch (Exception e) {
             return ResultUtil.error(-1, "下载失败");
         }
+    }
+
+    public Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO) {
+
     }
 }

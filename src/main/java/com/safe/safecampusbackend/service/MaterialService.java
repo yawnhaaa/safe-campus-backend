@@ -1,5 +1,6 @@
 package com.safe.safecampusbackend.service;
 
+import com.safe.safecampusbackend.model.dto.IssueMaterialDTO;
 import com.safe.safecampusbackend.model.vo.MaterialListVO;
 import com.safe.safecampusbackend.model.vo.MaterialVO;
 import com.safe.safecampusbackend.util.result.Result;
@@ -43,4 +44,12 @@ public interface MaterialService {
      * @return 成功与否
      */
     Result<String> downloadMaterial(Long id);
+
+    /**
+     * 发布素材
+     *
+     * @param issueMaterialDTO 素材必要字段
+     * @return 成功与否
+     */
+    Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO);
 }

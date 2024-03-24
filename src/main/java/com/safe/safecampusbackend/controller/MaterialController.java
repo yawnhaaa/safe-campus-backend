@@ -1,5 +1,6 @@
 package com.safe.safecampusbackend.controller;
 
+import com.safe.safecampusbackend.model.dto.IssueMaterialDTO;
 import com.safe.safecampusbackend.model.vo.MaterialListVO;
 import com.safe.safecampusbackend.model.vo.MaterialVO;
 import com.safe.safecampusbackend.service.MaterialService;
@@ -7,6 +8,7 @@ import com.safe.safecampusbackend.util.result.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,5 +41,10 @@ public class MaterialController {
     @GetMapping("/downloadMaterial/{id}")
     public Result<String> downloadMaterial(@PathVariable Long id) {
         return materialService.downloadMaterial(id);
+    }
+
+    @PostMapping("/issueMaterial")
+    public Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO) {
+        return materialService.issueMaterial(issueMaterialDTO);
     }
 }
