@@ -131,3 +131,43 @@ INSERT INTO material (src, title, author, author_id, material_date, material_typ
 VALUES ('music.mp3', '枫', '周杰伦', '1', '2024-03-23 13:08:42', 2),
        ('fanzha.jpg', '坚持反诈不动摇', '帅气程序员', '1', '2024-03-23 13:08:42', 0),
        ('video.mp4', '反诈工作贯彻到底', '帅气发布者', '1', '2024-03-23 13:08:42', 1);
+
+DROP TABLE IF EXISTS `question`;
+
+CREATE TABLE `question`
+(
+    id        bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
+    type      tinyint(1)   NOT NULL COMMENT '题目类型：1单选、2多选',
+    title     varchar(100) NOT NULL COMMENT '题目',
+    analysis  varchar(100) NOT NULL COMMENT '解析',
+    is_submit boolean    DEFAULT FALSE COMMENT '是否提交',
+    is_delete tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+);
+
+INSERT INTO question (type, title, analysis)
+VALUES (0, '阿豪帅不帅?', '天生的咯'),
+       (1, '再问一遍，阿豪帅不帅？', '必须帅，天生的！！');
+
+DROP TABLE IF EXISTS `question_content`;
+
+CREATE TABLE `question_content`
+(
+    id          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    question_id bigint(20)  NOT NULL COMMENT '外键',
+    content     varchar(50) NOT NULL COMMENT '选项内容',
+    is_checked  boolean    DEFAULT FALSE COMMENT '是否选择',
+    is_true     boolean    DEFAULT FALSE COMMENT '是否正确',
+    is_delete   tinyint(1) DEFAULT 0 COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
+);
+
+INSERT INTO question_content (question_id, content, is_true)
+VALUES (1, '帅', false),
+       (1, '很帅', false),
+       (1, '特别帅', true),
+       (2, '帅', true),
+       (2, '很帅', true),
+       (2, '特别帅', true),
+       (2, '巨无敌帅', true);
