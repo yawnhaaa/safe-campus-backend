@@ -21,7 +21,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -188,11 +192,25 @@ public class InfoServiceImpl implements InfoService {
         if (issueInfoDTO.getContent() == null) {
             return ResultUtil.error(-1, "资讯内容不能为空");
         }
-        if (issueInfoDTO.getFile() != null){
-            System.out.println("hello");
-        }
         InfoEntity entity = new InfoEntity();
         BeanUtils.copyProperties(issueInfoDTO, entity);
+        if (issueInfoDTO.getFile() != null) {
+            try {
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+                String timestamp = now.format(formatter);
+                // 获取上传的文件名
+                String fileName = timestamp + '_' + issueInfoDTO.getFile().getOriginalFilename();
+                // 构建目标文件对象
+                File destFile = new File("/Users/ahao/project/resource/imgSrc/" + fileName);
+                // 将上传的文件保存到目标文件中
+                issueInfoDTO.getFile().transferTo(destFile);
+                entity.setImg(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         Date currentTime = new Date();
         entity.setIsDelete(1);
         entity.setInfoDate(currentTime);
