@@ -8,10 +8,8 @@ import com.safe.safecampusbackend.model.vo.InfoUserStatusVO;
 import com.safe.safecampusbackend.model.vo.InfoVO;
 import com.safe.safecampusbackend.service.InfoService;
 import com.safe.safecampusbackend.util.result.Result;
-import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

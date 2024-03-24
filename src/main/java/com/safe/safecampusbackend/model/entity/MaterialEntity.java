@@ -40,7 +40,7 @@ public class MaterialEntity {
      * 作者id
      */
     @TableField("author_id")
-    private String authorId;
+    private Long authorId;
     /**
      * 发布日期
      */
@@ -50,7 +50,7 @@ public class MaterialEntity {
      * 素材类型
      */
     @TableField("material_type")
-    private String materialType;
+    private Integer materialType;
     /**
      * 下载次数
      */

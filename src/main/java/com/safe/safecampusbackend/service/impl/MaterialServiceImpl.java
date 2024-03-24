@@ -3,6 +3,7 @@ package com.safe.safecampusbackend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.MaterialDAO;
 import com.safe.safecampusbackend.model.dto.IssueMaterialDTO;
+import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
 import com.safe.safecampusbackend.model.vo.MaterialListVO;
 import com.safe.safecampusbackend.model.vo.MaterialVO;
@@ -13,8 +14,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -124,6 +131,65 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     public Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO) {
+        if (issueMaterialDTO.getTitle() == null) {
+            return ResultUtil.error(-1, "标题不能为空");
+        }
+        if (issueMaterialDTO.getAuthor() == null) {
+            return ResultUtil.error(-1, "网络错误");
+        }
+        if (issueMaterialDTO.getAuthorId() == null) {
+            return ResultUtil.error(-1, "网络错误");
+        }
+        if (issueMaterialDTO.getMaterialType() == null) {
+            return ResultUtil.error(-1, "素材类型不能为空");
+        }
+        if (issueMaterialDTO.getFile() == null) {
+            return ResultUtil.error(-1, "素材不能为空");
+        }
+        MaterialEntity entity = new MaterialEntity();
+        BeanUtils.copyProperties(issueMaterialDTO, entity);
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String timestamp = now.format(formatter);
+        try {
+            // 获取上传的文件名
+            String fileName = timestamp + '_' + issueMaterialDTO.getFile().getOriginalFilename();
+            // 构建目标文件对象
+            Map<Integer, String> materialTypeMap = Map.of(
+                    0, "images/",
+                    1, "videos/",
+                    2, "audios/"
+            );
+            String dirPath = materialTypeMap.getOrDefault(issueMaterialDTO.getMaterialType(), "others/");
+            File destFile = new File("/Users/ahao/project/resource/" + dirPath + fileName);
+            // 将上传的文件保存到目标文件中
+            issueMaterialDTO.getFile().transferTo(destFile);
+            entity.setSrc(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (issueMaterialDTO.getImgFile() != null) {
+            try {
+                // 获取上传的文件名
+                String fileName = timestamp + '_' + issueMaterialDTO.getImgFile().getOriginalFilename();
+                // 构建目标文件对象
+                File destFile = new File("/Users/ahao/project/resource/imgSrc/" + fileName);
+                // 将上传的文件保存到目标文件中
+                issueMaterialDTO.getImgFile().transferTo(destFile);
+                entity.setImgSrc(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        Date currentTime = new Date();
+        entity.setIsDelete(1);
+        entity.setMaterialDate(currentTime);
+        try {
+            materialDAO.insert(entity);
+            return ResultUtil.success("已发布,等待审核");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 }
