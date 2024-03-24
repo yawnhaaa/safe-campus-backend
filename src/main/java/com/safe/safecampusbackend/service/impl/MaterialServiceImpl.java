@@ -3,7 +3,6 @@ package com.safe.safecampusbackend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.MaterialDAO;
 import com.safe.safecampusbackend.model.dto.IssueMaterialDTO;
-import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
 import com.safe.safecampusbackend.model.vo.MaterialListVO;
 import com.safe.safecampusbackend.model.vo.MaterialVO;
@@ -11,6 +10,8 @@ import com.safe.safecampusbackend.service.MaterialService;
 import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
     private final MaterialDAO materialDAO;
+    private static final Logger logger = LogManager.getLogger(MaterialServiceImpl.class);
 
     public Result<List<MaterialListVO>> getImageList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
@@ -41,7 +43,7 @@ public class MaterialServiceImpl implements MaterialService {
                         BeanUtils.copyProperties(materialEntity, materialListVO);
                         materialListVOList.add(materialListVO);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
             }
@@ -65,7 +67,7 @@ public class MaterialServiceImpl implements MaterialService {
                         materialListVOList.add(materialListVO);
                     } catch (Exception e) {
                         // 复制属性发生异常
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
             }
@@ -89,7 +91,7 @@ public class MaterialServiceImpl implements MaterialService {
                         materialListVOList.add(materialListVO);
                     } catch (Exception e) {
                         // 复制属性发生异常
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
             }
@@ -166,7 +168,7 @@ public class MaterialServiceImpl implements MaterialService {
             issueMaterialDTO.getFile().transferTo(destFile);
             entity.setSrc(fileName);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         if (issueMaterialDTO.getImgFile() != null) {
             try {
@@ -178,7 +180,7 @@ public class MaterialServiceImpl implements MaterialService {
                 issueMaterialDTO.getImgFile().transferTo(destFile);
                 entity.setImgSrc(fileName);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
 

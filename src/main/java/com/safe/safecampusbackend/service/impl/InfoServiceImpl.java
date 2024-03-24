@@ -18,6 +18,8 @@ import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,7 @@ public class InfoServiceImpl implements InfoService {
     private final InfoDAO infoDAO;
     private final UserDao userDao;
     private final InfoUserDAO infoUserDAO;
+    private static final Logger logger = LogManager.getLogger(InfoServiceImpl.class);
 
     /**
      * 首页拿到资讯列表
@@ -207,7 +210,7 @@ public class InfoServiceImpl implements InfoService {
                 issueInfoDTO.getFile().transferTo(destFile);
                 entity.setImg(fileName);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
 
