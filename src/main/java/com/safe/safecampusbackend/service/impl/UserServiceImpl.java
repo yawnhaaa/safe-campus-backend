@@ -2,7 +2,7 @@ package com.safe.safecampusbackend.service.impl;
 
 import cn.hutool.extra.mail.MailUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.safe.safecampusbackend.dao.UserDao;
+import com.safe.safecampusbackend.dao.UserDAO;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.dto.UserDetailDTO;
@@ -25,7 +25,7 @@ import java.util.Objects;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
+    private final UserDAO userDao;
 
     public Result<String> register(RegisterDTO registerDTO) {
         QueryWrapper<UserEntity> emailQueryWrapper = new QueryWrapper<>();

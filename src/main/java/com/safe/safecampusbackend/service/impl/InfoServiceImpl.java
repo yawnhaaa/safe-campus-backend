@@ -3,7 +3,7 @@ package com.safe.safecampusbackend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.InfoDAO;
 import com.safe.safecampusbackend.dao.InfoUserDAO;
-import com.safe.safecampusbackend.dao.UserDao;
+import com.safe.safecampusbackend.dao.UserDAO;
 import com.safe.safecampusbackend.model.dto.InfoUserDTO;
 import com.safe.safecampusbackend.model.dto.InfoUserStatusDTO;
 import com.safe.safecampusbackend.model.dto.IssueInfoDTO;
@@ -35,7 +35,7 @@ import java.util.List;
 @AllArgsConstructor
 public class InfoServiceImpl implements InfoService {
     private final InfoDAO infoDAO;
-    private final UserDao userDao;
+    private final UserDAO userDao;
     private final InfoUserDAO infoUserDAO;
     private static final Logger logger = LogManager.getLogger(InfoServiceImpl.class);
 

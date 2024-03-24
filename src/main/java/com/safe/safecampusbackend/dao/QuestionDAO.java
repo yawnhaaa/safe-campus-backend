@@ -5,5 +5,5 @@ import com.safe.safecampusbackend.model.entity.QuestionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface QuestionDao extends BaseMapper<QuestionEntity> {
+public interface QuestionDAO extends BaseMapper<QuestionEntity> {
 }
