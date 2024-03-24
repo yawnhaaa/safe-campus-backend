@@ -6,8 +6,6 @@ import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.vo.JWTVO;
 import com.safe.safecampusbackend.model.vo.UserDetailVO;
 import com.safe.safecampusbackend.util.result.Result;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UserService {
     /**

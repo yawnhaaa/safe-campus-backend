@@ -1,5 +1,8 @@
 package com.safe.safecampusbackend.model.dto;
 
+import lombok.Data;
+
+@Data
 public class UserDetailDTO {
     private Long id;
     private String name;

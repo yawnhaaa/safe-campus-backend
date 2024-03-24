@@ -17,7 +17,10 @@ import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
 import com.safe.safecampusbackend.util.salt.SaltUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -94,11 +97,31 @@ public class UserServiceImpl implements UserService {
     }
 
     public Result<UserDetailVO> getUserDetail(Long id) {
+        UserEntity userEntity = userDao.selectById(id);
         UserDetailVO userDetailVO = new UserDetailVO();
+        if (userEntity != null && userEntity.getIsDelete() != 1) {
+            BeanUtils.copyProperties(userEntity, userDetailVO);
+        }
         return ResultUtil.success(userDetailVO);
     }
 
     public Result<String> updateUserDetail(UserDetailDTO userDetailDTO) {
-        return ResultUtil.success("6");
+        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", userDetailDTO.getName());
+        UserEntity userEntity = userDao.selectOne(queryWrapper);
+        if (userEntity != null && (!Objects.equals(userDetailDTO.getId(), userEntity.getId()))) {
+            return ResultUtil.error(-1, "该昵称已被使用");
+        }
+        UserEntity entity = userDao.selectById(userDetailDTO.getId());
+        if (entity == null) {
+            return ResultUtil.error(-1, "网络错误");
+        }
+        BeanUtils.copyProperties(userDetailDTO, entity);
+        try {
+            userDao.updateById(entity);
+            return ResultUtil.success("更新成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 }
