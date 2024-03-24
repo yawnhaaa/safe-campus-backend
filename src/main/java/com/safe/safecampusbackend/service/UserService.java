@@ -2,8 +2,12 @@ package com.safe.safecampusbackend.service;
 
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserDetailVO;
 import com.safe.safecampusbackend.util.result.Result;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UserService {
     /**
@@ -29,4 +33,20 @@ public interface UserService {
      * @return 发送情况
      */
     Result<String> getEmailCode(String email);
+
+    /**
+     * 获取用户信息
+     *
+     * @param id 用户id
+     * @return 用户信息
+     */
+    Result<UserDetailVO> getUserDetail(Long id);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userDetailDTO 用户信息表单
+     * @return 更新状态
+     */
+    Result<String> updateUserDetail(UserDetailDTO userDetailDTO);
 }

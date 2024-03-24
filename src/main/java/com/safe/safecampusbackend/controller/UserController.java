@@ -2,7 +2,9 @@ package com.safe.safecampusbackend.controller;
 
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserDetailVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
 import com.safe.safecampusbackend.util.result.Result;
@@ -37,5 +39,15 @@ public class UserController {
         String jwt = request.get("jwt");
         String user = request.get("user");
         return ResultUtil.success(JWTUtil.validateJWT(jwt, user));
+    }
+
+    @GetMapping("/getUserDetail/{id}")
+    public Result<UserDetailVO> getUserDetail(@PathVariable Long id) {
+        return userService.getUserDetail(id);
+    }
+
+    @PostMapping("/updateUserDetail")
+    public Result<String> updateUserDetail(@RequestBody UserDetailDTO userDetailDTO) {
+        return userService.updateUserDetail(userDetailDTO);
     }
 }

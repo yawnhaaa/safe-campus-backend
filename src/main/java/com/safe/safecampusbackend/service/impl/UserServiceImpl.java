@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.UserDao;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
+import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserDetailVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
@@ -89,5 +91,14 @@ public class UserServiceImpl implements UserService {
         RedisUtil.setCache(email, 300, code);
         MailUtil.send(email, "反诈校园验证码", "<html><body><h1>您的验证码为：" + code + "</h1><h4>五分钟内有效</h4></body></html>", true);
         return ResultUtil.success("验证码已发送至邮箱，有效期 5分钟");
+    }
+
+    public Result<UserDetailVO> getUserDetail(Long id) {
+        UserDetailVO userDetailVO = new UserDetailVO();
+        return ResultUtil.success(userDetailVO);
+    }
+
+    public Result<String> updateUserDetail(UserDetailDTO userDetailDTO) {
+        return ResultUtil.success("6");
     }
 }

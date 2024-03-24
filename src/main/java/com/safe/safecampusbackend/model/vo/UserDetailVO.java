@@ -3,8 +3,8 @@ package com.safe.safecampusbackend.model.vo;
 import lombok.Data;
 
 @Data
-public class DetailVO {
-    private Long id;
+public class UserDetailVO {
+    private String name;
     private String email;
     private String intro;
     private Integer gender;
