@@ -10,6 +10,7 @@ import com.safe.safecampusbackend.service.InfoService;
 import com.safe.safecampusbackend.util.result.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class InfoController {
     }
 
     @PostMapping("/handleInfo")
-    public Result<String> handleInfo(@RequestBody InfoUserDTO infoUserDTO){
+    public Result<String> handleInfo(@RequestBody InfoUserDTO infoUserDTO) {
         return infoService.handleInfo(infoUserDTO);
     }
 
@@ -39,7 +40,7 @@ public class InfoController {
     }
 
     @PostMapping("/issueInfo")
-    public Result<String> issueInfo(@RequestBody IssueInfoDTO issueInfoDTO){
+    public Result<String> issueInfo(@RequestBody IssueInfoDTO issueInfoDTO) {
         return infoService.issueInfo(issueInfoDTO);
     }
 }

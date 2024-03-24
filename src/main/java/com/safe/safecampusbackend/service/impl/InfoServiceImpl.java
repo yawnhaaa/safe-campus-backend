@@ -195,7 +195,7 @@ public class InfoServiceImpl implements InfoService {
         entity.setInfoDate(currentTime);
         try {
             infoDAO.insert(entity);
-            return ResultUtil.success("等待审核");
+            return ResultUtil.success("已发布,等待审核");
         } catch (Exception e) {
             return ResultUtil.error(-1, "网络错误");
         }
