@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`
 (
     id        bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
-    type      tinyint(1)   NOT NULL COMMENT '题目类型：1单选、2多选',
+    type      tinyint(1)   NOT NULL COMMENT '题目类型：0单选、1多选',
     title     varchar(100) NOT NULL COMMENT '题目',
     analysis  varchar(100) NOT NULL COMMENT '解析',
     is_submit boolean    DEFAULT FALSE COMMENT '是否提交',
