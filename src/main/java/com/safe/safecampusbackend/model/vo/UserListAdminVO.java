@@ -9,6 +9,6 @@ public class UserListAdminVO {
     private String email;
     private String school;
     private String college;
-    private String stu_num;
-    private Integer is_delete;
+    private String stuNum;
+    private Integer isDelete;
 }
