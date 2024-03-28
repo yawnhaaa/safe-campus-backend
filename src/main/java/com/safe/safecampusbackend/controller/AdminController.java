@@ -105,14 +105,24 @@ public class AdminController {
         return adminService.getInfoReviewList();
     }
 
-    @GetMapping("/reviewInfo/{id}")
-    public Result<String> reviewInfo(@PathVariable Long id) {
-        return adminService.reviewInfo(id);
+    @GetMapping("/passInfo/{id}")
+    public Result<String> passInfo(@PathVariable Long id) {
+        return adminService.passInfo(id);
     }
 
-    @GetMapping("/reviewInfoList")
-    public Result<String> reviewInfoList(@RequestParam List<Long> idList) {
-        return adminService.reviewInfoList(idList);
+    @GetMapping("/noPassInfo/{id}")
+    public Result<String> noPassInfo(@PathVariable Long id) {
+        return adminService.noPassInfo(id);
+    }
+
+    @GetMapping("/passInfoList")
+    public Result<String> passInfoList(@RequestParam List<Long> idList) {
+        return adminService.passInfoList(idList);
+    }
+
+    @GetMapping("/noPassInfoList")
+    public Result<String> noPassInfoList(@RequestParam List<Long> idList) {
+        return adminService.noPassInfoList(idList);
     }
 
     @GetMapping("/getImageList")
@@ -175,13 +185,23 @@ public class AdminController {
         return adminService.getAudioReviewList();
     }
 
-    @GetMapping("/reviewMaterial/{id}")
-    public Result<String> reviewMaterial(@PathVariable Long id) {
-        return adminService.reviewMaterial(id);
+    @GetMapping("/passMaterial/{id}")
+    public Result<String> passMaterial(@PathVariable Long id) {
+        return adminService.passMaterial(id);
     }
 
-    @GetMapping("/reviewMaterialList")
-    public Result<String> reviewMaterialList(@RequestParam List<Long> idList) {
-        return adminService.reviewMaterialList(idList);
+    @GetMapping("/noPassMaterial/{id}")
+    public Result<String> noPassMaterial(@PathVariable Long id) {
+        return adminService.noPassMaterial(id);
+    }
+
+    @GetMapping("/passMaterialList")
+    public Result<String> passMaterialList(@RequestParam List<Long> idList) {
+        return adminService.passMaterialList(idList);
+    }
+
+    @GetMapping("/noPassMaterialList")
+    public Result<String> noPassMaterialList(@RequestParam List<Long> idList) {
+        return adminService.noPassMaterialList(idList);
     }
 }

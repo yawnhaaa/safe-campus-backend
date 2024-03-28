@@ -135,20 +135,36 @@ public interface AdminService {
     Result<List<InfoEntity>> getInfoReviewList();
 
     /**
-     * 审核资讯
+     * 通过资讯
      *
      * @param id 资讯id
      * @return 结果
      */
-    Result<String> reviewInfo(Long id);
+    Result<String> passInfo(Long id);
 
     /**
-     * 审核资讯列表
+     * 驳回资讯
+     *
+     * @param id 资讯id
+     * @return 结果
+     */
+    Result<String> noPassInfo(Long id);
+
+    /**
+     * 通过资讯列表
      *
      * @param idList 资讯列表
      * @return 结果
      */
-    Result<String> reviewInfoList(List<Long> idList);
+    Result<String> passInfoList(List<Long> idList);
+
+    /**
+     * 驳回资讯列表
+     *
+     * @param idList 资讯列表
+     * @return 结果
+     */
+    Result<String> noPassInfoList(List<Long> idList);
 
     /**
      * 获取is_delete为0，1的列表
@@ -243,18 +259,34 @@ public interface AdminService {
     Result<List<MaterialEntity>> getAudioReviewList();
 
     /**
-     * 审核入参id的数据
+     * 通过入参id的数据
      *
      * @param id 主键
      * @return 结果
      */
-    Result<String> reviewMaterial(Long id);
+    Result<String> passMaterial(Long id);
 
     /**
-     * 审核id列表的数据
+     * 驳回入参id的数据
+     *
+     * @param id 主键
+     * @return 结果
+     */
+    Result<String> noPassMaterial(Long id);
+
+    /**
+     * 通过id列表的数据
      *
      * @param idList id列表
      * @return 结果
      */
-    Result<String> reviewMaterialList(List<Long> idList);
+    Result<String> passMaterialList(List<Long> idList);
+
+    /**
+     * 驳回id列表的数据
+     *
+     * @param idList id列表
+     * @return 结果
+     */
+    Result<String> noPassMaterialList(List<Long> idList);
 }

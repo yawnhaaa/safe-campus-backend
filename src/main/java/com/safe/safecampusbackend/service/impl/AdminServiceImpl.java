@@ -192,7 +192,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(infoEntityList);
     }
 
-    public Result<String> reviewInfo(Long id) {
+    public Result<String> passInfo(Long id) {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
         if (info.getIsDelete().equals(0)) {
@@ -203,7 +203,18 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("审核通过");
     }
 
-    public Result<String> reviewInfoList(List<Long> idList) {
+    public Result<String> noPassInfo(Long id) {
+        InfoEntity info = infoDAO.selectById(id);
+        if (info == null) return ResultUtil.error(-1, "网络错误");
+        if (info.getIsDelete().equals(3)) {
+            return ResultUtil.error(-1, "启用状态");
+        }
+        info.setIsDelete(3);
+        infoDAO.updateById(info);
+        return ResultUtil.success("审核驳回");
+    }
+
+    public Result<String> passInfoList(List<Long> idList) {
         for (Long id : idList) {
             InfoEntity info = infoDAO.selectById(id);
             if (info == null) return ResultUtil.error(-1, "网络错误");
@@ -211,6 +222,16 @@ public class AdminServiceImpl implements AdminService {
             infoDAO.updateById(info);
         }
         return ResultUtil.success("启用成功");
+    }
+
+    public Result<String> noPassInfoList(List<Long> idList) {
+        for (Long id : idList) {
+            InfoEntity info = infoDAO.selectById(id);
+            if (info == null) return ResultUtil.error(-1, "网络错误");
+            info.setIsDelete(3);
+            infoDAO.updateById(info);
+        }
+        return ResultUtil.success("驳回成功");
     }
 
 
@@ -317,7 +338,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(materialEntityList);
     }
 
-    public Result<String> reviewMaterial(Long id) {
+    public Result<String> passMaterial(Long id) {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(0)) {
@@ -328,7 +349,18 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("审核成功");
     }
 
-    public Result<String> reviewMaterialList(List<Long> idList) {
+    public Result<String> noPassMaterial(Long id) {
+        MaterialEntity material = materialDAO.selectById(id);
+        if (material == null) return ResultUtil.error(-1, "网络错误");
+        if (material.getIsDelete().equals(0)) {
+            return ResultUtil.error(-1, "启用状态");
+        }
+        material.setIsDelete(3);
+        materialDAO.updateById(material);
+        return ResultUtil.success("审核驳回");
+    }
+
+    public Result<String> passMaterialList(List<Long> idList) {
         for (Long id : idList) {
             MaterialEntity material = materialDAO.selectById(id);
             if (material == null) return ResultUtil.error(-1, "网络错误");
@@ -336,5 +368,15 @@ public class AdminServiceImpl implements AdminService {
             materialDAO.updateById(material);
         }
         return ResultUtil.success("审核成功");
+    }
+
+    public Result<String> noPassMaterialList(List<Long> idList) {
+        for (Long id : idList) {
+            MaterialEntity material = materialDAO.selectById(id);
+            if (material == null) return ResultUtil.error(-1, "网络错误");
+            material.setIsDelete(3);
+            materialDAO.updateById(material);
+        }
+        return ResultUtil.success("驳回成功");
     }
 }
