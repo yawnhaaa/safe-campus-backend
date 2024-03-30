@@ -9,6 +9,8 @@ import com.safe.safecampusbackend.model.vo.UserDetailVO;
 import com.safe.safecampusbackend.model.vo.UserLikeVO;
 import com.safe.safecampusbackend.util.result.Result;
 
+import java.util.List;
+
 public interface UserService {
     /**
      * 用户注册
@@ -56,7 +58,7 @@ public interface UserService {
      * @param username 用户名
      * @return 喜欢列表
      */
-    Result<UserLikeVO> getLikeList(String username);
+    Result<List<UserLikeVO>> getLikeList(String username);
 
     /**
      * 获取用户收藏列表
@@ -64,5 +66,5 @@ public interface UserService {
      * @param username 用户名
      * @return 收藏列表
      */
-    Result<UserCollectVO> getCollectList(String username);
+    Result<List<UserCollectVO>> getCollectList(String username);
 }

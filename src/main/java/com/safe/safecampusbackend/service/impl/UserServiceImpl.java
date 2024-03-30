@@ -2,10 +2,13 @@ package com.safe.safecampusbackend.service.impl;
 
 import cn.hutool.extra.mail.MailUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.safe.safecampusbackend.dao.InfoDAO;
+import com.safe.safecampusbackend.dao.InfoUserDAO;
 import com.safe.safecampusbackend.dao.UserDAO;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.dto.UserDetailDTO;
+import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.InfoUserEntity;
 import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.model.vo.JWTVO;
@@ -23,12 +26,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserDAO userDao;
+    private final InfoDAO infoDAO;
+    private final InfoUserDAO infoUserDAO;
 
     public Result<String> register(RegisterDTO registerDTO) {
         QueryWrapper<UserEntity> emailQueryWrapper = new QueryWrapper<>();
@@ -128,11 +135,39 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Result<UserLikeVO> getLikeList(String username) {
+    public Result<List<UserLikeVO>> getLikeList(String username) {
         QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("user_name", username)
+                .eq("is_like", 1);
+        List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
+        List<UserLikeVO> userLikeVOList = new ArrayList<>();
+        for (InfoUserEntity infoUserEntity : infoUserEntityList) {
+            if (infoUserEntity != null) {
+                UserLikeVO userLikeVO = new UserLikeVO();
+                InfoEntity infoEntity = infoDAO.selectById(infoUserEntity.getInfoId());
+                BeanUtils.copyProperties(infoEntity, userLikeVO);
+                userLikeVOList.add(userLikeVO);
+            }
+        }
+        return ResultUtil.success(userLikeVOList);
     }
 
-    public Result<UserCollectVO> getCollectList(String username) {
-
+    public Result<List<UserCollectVO>> getCollectList(String username) {
+        QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("user_name", username)
+                .eq("is_collect", 1);
+        List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
+        List<UserCollectVO> userCollectVOList = new ArrayList<>();
+        for (InfoUserEntity infoUserEntity : infoUserEntityList) {
+            if (infoUserEntity != null) {
+                UserCollectVO userCollectVO = new UserCollectVO();
+                InfoEntity infoEntity = infoDAO.selectById(infoUserEntity.getInfoId());
+                BeanUtils.copyProperties(infoEntity, userCollectVO);
+                userCollectVOList.add(userCollectVO);
+            }
+        }
+        return ResultUtil.success(userCollectVOList);
     }
 }

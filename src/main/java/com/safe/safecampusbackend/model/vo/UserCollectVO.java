@@ -7,5 +7,5 @@ public class UserCollectVO {
     private Long id;
     private String title;
     private String author;
-    private Integer collect;
+    private Integer infoCollect;
 }

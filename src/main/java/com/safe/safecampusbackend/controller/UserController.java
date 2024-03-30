@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -54,12 +55,12 @@ public class UserController {
     }
 
     @GetMapping("/getLikeList/{username}")
-    public Result<UserLikeVO> getLikeList(@PathVariable String username) {
+    public Result<List<UserLikeVO>> getLikeList(@PathVariable String username) {
         return userService.getLikeList(username);
     }
 
     @GetMapping("/getCollectList/{username}")
-    public Result<UserCollectVO> getCollectList(@PathVariable String username) {
+    public Result<List<UserCollectVO>> getCollectList(@PathVariable String username) {
         return userService.getCollectList(username);
     }
 }

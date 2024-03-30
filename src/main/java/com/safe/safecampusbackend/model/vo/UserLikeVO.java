@@ -7,5 +7,5 @@ public class UserLikeVO {
     private Long id;
     private String title;
     private String author;
-    private Integer like;
+    private Integer infoLike;
 }
