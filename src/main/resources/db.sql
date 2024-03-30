@@ -145,10 +145,6 @@ CREATE TABLE `question`
     PRIMARY KEY (`id`)
 );
 
-INSERT INTO question (type, title, analysis)
-VALUES (0, '阿豪帅不帅?', '天生的咯'),
-       (1, '再问一遍，阿豪帅不帅？', '必须帅，天生的！！');
-
 DROP TABLE IF EXISTS `question_content`;
 
 CREATE TABLE `question_content`
@@ -162,6 +158,10 @@ CREATE TABLE `question_content`
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
 );
+
+INSERT INTO question (type, title, analysis)
+VALUES (0, '阿豪帅不帅?', '天生的咯'),
+       (1, '再问一遍，阿豪帅不帅？', '必须帅，天生的！！');
 
 INSERT INTO question_content (question_id, content, is_true)
 VALUES (1, '帅', false),

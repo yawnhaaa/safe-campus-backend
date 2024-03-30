@@ -2,6 +2,7 @@ package com.safe.safecampusbackend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.*;
+import com.safe.safecampusbackend.model.dto.QuestionContentDTO;
 import com.safe.safecampusbackend.model.dto.QuestionDTO;
 import com.safe.safecampusbackend.model.dto.UserUpdatePasswdDTO;
 import com.safe.safecampusbackend.model.entity.*;
@@ -14,6 +15,7 @@ import com.safe.safecampusbackend.util.salt.SaltUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -334,7 +336,6 @@ public class AdminServiceImpl implements AdminService {
     public Result<List<MaterialEntity>> getImageReviewList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("is_delete", 2, 3);
-        ;
         queryWrapper.eq("material_type", 0); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
@@ -343,7 +344,6 @@ public class AdminServiceImpl implements AdminService {
     public Result<List<MaterialEntity>> getVideoReviewList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("is_delete", 2, 3);
-        ;
         queryWrapper.eq("material_type", 1); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
@@ -414,15 +414,81 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(questionListVOList);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Result<String> deleteQuestion(Long id) {
+        try {
+            QueryWrapper<QuestionContentEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("question_id", id);
+            List<QuestionContentEntity> questionContentEntityList = questionContentDAO.selectList(queryWrapper);
+            for (QuestionContentEntity entity : questionContentEntityList) {
+                questionContentDAO.deleteById(entity.getId());
+            }
+            questionDAO.deleteById(id);
 
+            return ResultUtil.success("删除成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, e.getMessage());
+        }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Result<String> updateQuestion(QuestionDTO questionDTO) {
+        try {
+            // 更新题目信息
+            QuestionEntity questionEntity = new QuestionEntity();
+            BeanUtils.copyProperties(questionDTO, questionEntity);
+            questionDAO.updateById(questionEntity);
 
+            // 更新选项信息
+            List<QuestionContentDTO> questionContentDTOList = questionDTO.getQuestionContentDTOList();
+            if (questionContentDTOList != null && !questionContentDTOList.isEmpty()) {
+                for (QuestionContentDTO questionContentDTO : questionContentDTOList) {
+                    QuestionContentEntity questionContentEntity = questionContentDAO.selectById(questionContentDTO.getId());
+                    if (questionContentEntity != null) {
+                        if (questionContentDTO.getContent() != null) {
+                            questionContentEntity.setContent(questionContentDTO.getContent());
+                        }
+                        if (questionContentDTO.getIsTrue() != null) {
+                            questionContentEntity.setIsTrue(questionContentDTO.getIsTrue());
+                        }
+                        questionContentDAO.updateById(questionContentEntity);
+                    }
+                }
+            }
+
+            return ResultUtil.success("更新成功");
+        } catch (Exception e) {
+            // Handle exception
+            return ResultUtil.error(-1, "更新失败");
+        }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Result<String> newQuestion(QuestionDTO questionDTO) {
+        try {
+            // 创建题目实体对象并复制属性
+            QuestionEntity questionEntity = new QuestionEntity();
+            BeanUtils.copyProperties(questionDTO, questionEntity);
 
+            // 保存题目信息
+            questionDAO.insert(questionEntity);
+
+            // 处理选项信息
+            List<QuestionContentDTO> questionContentDTOList = questionDTO.getQuestionContentDTOList();
+            if (questionContentDTOList != null && !questionContentDTOList.isEmpty()) {
+                for (QuestionContentDTO questionContentDTO : questionContentDTOList) {
+                    QuestionContentEntity questionContentEntity = new QuestionContentEntity();
+                    BeanUtils.copyProperties(questionContentDTO, questionContentEntity);
+                    questionContentEntity.setQuestionId(questionEntity.getId()); // 设置关联的题目ID
+                    questionContentDAO.insert(questionContentEntity);
+                }
+            }
+
+            return ResultUtil.success("新增成功");
+        } catch (Exception e) {
+            // Handle exception
+            return ResultUtil.error(-1, "新增失败");
+        }
     }
+
 }

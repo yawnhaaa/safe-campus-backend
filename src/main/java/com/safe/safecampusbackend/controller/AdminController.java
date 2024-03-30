@@ -227,12 +227,12 @@ public class AdminController {
         return adminService.deleteQuestion(id);
     }
 
-    @PostMapping("/updateQuestion/{id}")
+    @PostMapping("/updateQuestion")
     public Result<String> updateQuestion(@RequestBody QuestionDTO questionDTO) {
         return adminService.updateQuestion(questionDTO);
     }
 
-    @PostMapping("/newQuestion/{id}")
+    @PostMapping("/newQuestion")
     public Result<String> newQuestion(@RequestBody QuestionDTO questionDTO) {
         return adminService.newQuestion(questionDTO);
     }
