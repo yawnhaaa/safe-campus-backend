@@ -432,6 +432,26 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    public Result<String> deleteQuestionList(List<Long> idList) {
+        try {
+            for (Long id : idList) {
+                // 删除题目内容实体
+                QueryWrapper<QuestionContentEntity> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("question_id", id);
+                List<QuestionContentEntity> questionContentEntityList = questionContentDAO.selectList(queryWrapper);
+                for (QuestionContentEntity entity : questionContentEntityList) {
+                    questionContentDAO.deleteById(entity.getId());
+                }
+                // 删除题目
+                questionDAO.deleteById(id);
+            }
+            return ResultUtil.success("删除成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, e.getMessage());
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public Result<String> updateQuestion(QuestionDTO questionDTO) {
         try {
             // 更新题目信息

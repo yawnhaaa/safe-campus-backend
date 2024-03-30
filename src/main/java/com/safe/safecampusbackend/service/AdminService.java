@@ -324,6 +324,14 @@ public interface AdminService {
     Result<String> deleteQuestion(Long id);
 
     /**
+     * 删除题目列表
+     *
+     * @param idList 主键列表
+     * @return 结果
+     */
+    Result<String> deleteQuestionList(List<Long> idList);
+
+    /**
      * 更新题目
      *
      * @param questionDTO 更新题目必要字段

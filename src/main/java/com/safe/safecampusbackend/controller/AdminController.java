@@ -227,6 +227,11 @@ public class AdminController {
         return adminService.deleteQuestion(id);
     }
 
+    @GetMapping("/deleteQuestionList")
+    public Result<String> deleteQuestionList(@RequestParam List<Long> idList) {
+        return adminService.deleteQuestionList(idList);
+    }
+
     @PostMapping("/updateQuestion")
     public Result<String> updateQuestion(@RequestBody QuestionDTO questionDTO) {
         return adminService.updateQuestion(questionDTO);
