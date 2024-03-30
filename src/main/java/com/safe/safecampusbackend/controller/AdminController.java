@@ -1,9 +1,11 @@
 package com.safe.safecampusbackend.controller;
 
 import com.safe.safecampusbackend.model.dto.AdminLoginDTO;
+import com.safe.safecampusbackend.model.dto.QuestionDTO;
 import com.safe.safecampusbackend.model.dto.UserUpdatePasswdDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
+import com.safe.safecampusbackend.model.vo.QuestionListVO;
 import com.safe.safecampusbackend.model.vo.UserListAdminVO;
 import com.safe.safecampusbackend.service.AdminLoginService;
 import com.safe.safecampusbackend.service.AdminService;
@@ -213,5 +215,25 @@ public class AdminController {
     @GetMapping("/noPassMaterialList")
     public Result<String> noPassMaterialList(@RequestParam List<Long> idList) {
         return adminService.noPassMaterialList(idList);
+    }
+
+    @GetMapping("/getQuestionList")
+    public Result<List<QuestionListVO>> getQuestionList() {
+        return adminService.getQuestionList();
+    }
+
+    @GetMapping("/deleteQuestion/{id}")
+    public Result<String> deleteQuestion(@PathVariable Long id) {
+        return adminService.deleteQuestion(id);
+    }
+
+    @PostMapping("/updateQuestion/{id}")
+    public Result<String> updateQuestion(@RequestBody QuestionDTO questionDTO) {
+        return adminService.updateQuestion(questionDTO);
+    }
+
+    @PostMapping("/newQuestion/{id}")
+    public Result<String> newQuestion(@RequestBody QuestionDTO questionDTO) {
+        return adminService.newQuestion(questionDTO);
     }
 }

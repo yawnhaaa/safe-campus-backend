@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class QuestionListVO {
+    private Long id;
     private Integer type;
     private String title;
     private String analysis;

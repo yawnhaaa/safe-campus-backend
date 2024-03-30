@@ -1,8 +1,10 @@
 package com.safe.safecampusbackend.service;
 
+import com.safe.safecampusbackend.model.dto.QuestionDTO;
 import com.safe.safecampusbackend.model.dto.UserUpdatePasswdDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
+import com.safe.safecampusbackend.model.vo.QuestionListVO;
 import com.safe.safecampusbackend.model.vo.UserListAdminVO;
 import com.safe.safecampusbackend.util.result.Result;
 
@@ -305,4 +307,35 @@ public interface AdminService {
      * @return 结果
      */
     Result<String> noPassMaterialList(List<Long> idList);
+
+    /**
+     * 获取答题列表
+     *
+     * @return 答题列表
+     */
+    Result<List<QuestionListVO>> getQuestionList();
+
+    /**
+     * 删除题目
+     *
+     * @param id 题目id
+     * @return 结果
+     */
+    Result<String> deleteQuestion(Long id);
+
+    /**
+     * 更新题目
+     *
+     * @param questionDTO 更新题目必要字段
+     * @return 结果
+     */
+    Result<String> updateQuestion(QuestionDTO questionDTO);
+
+    /**
+     * 新增题目
+     *
+     * @param questionDTO 新增题目必要字段
+     * @return 结果
+     */
+    Result<String> newQuestion(QuestionDTO questionDTO);
 }

@@ -1,14 +1,11 @@
 package com.safe.safecampusbackend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.safe.safecampusbackend.dao.InfoDAO;
-import com.safe.safecampusbackend.dao.MaterialDAO;
-import com.safe.safecampusbackend.dao.QuestionDAO;
-import com.safe.safecampusbackend.dao.UserDAO;
+import com.safe.safecampusbackend.dao.*;
+import com.safe.safecampusbackend.model.dto.QuestionDTO;
 import com.safe.safecampusbackend.model.dto.UserUpdatePasswdDTO;
-import com.safe.safecampusbackend.model.entity.InfoEntity;
-import com.safe.safecampusbackend.model.entity.MaterialEntity;
-import com.safe.safecampusbackend.model.entity.UserEntity;
+import com.safe.safecampusbackend.model.entity.*;
+import com.safe.safecampusbackend.model.vo.QuestionListVO;
 import com.safe.safecampusbackend.model.vo.UserListAdminVO;
 import com.safe.safecampusbackend.service.AdminService;
 import com.safe.safecampusbackend.util.result.Result;
@@ -18,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +25,7 @@ public class AdminServiceImpl implements AdminService {
     private final InfoDAO infoDAO;
     private final MaterialDAO materialDAO;
     private final QuestionDAO questionDAO;
+    private final QuestionContentDAO questionContentDAO;
 
     // user逻辑开始
     public Result<List<UserListAdminVO>> getUserList() {
@@ -398,5 +397,32 @@ public class AdminServiceImpl implements AdminService {
             materialDAO.updateById(material);
         }
         return ResultUtil.success("驳回成功");
+    }
+
+    public Result<List<QuestionListVO>> getQuestionList() {
+        List<QuestionEntity> questionEntityList = questionDAO.selectList(null);
+        List<QuestionListVO> questionListVOList = new ArrayList<>();
+        for (QuestionEntity question : questionEntityList) {
+            QueryWrapper<QuestionContentEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("question_id", question.getId());
+            List<QuestionContentEntity> itemList = questionContentDAO.selectList(queryWrapper);
+            QuestionListVO questionListVO = new QuestionListVO();
+            BeanUtils.copyProperties(question, questionListVO);
+            questionListVO.setQuestionContentEntityList(itemList);
+            questionListVOList.add(questionListVO);
+        }
+        return ResultUtil.success(questionListVOList);
+    }
+
+    public Result<String> deleteQuestion(Long id) {
+
+    }
+
+    public Result<String> updateQuestion(QuestionDTO questionDTO) {
+
+    }
+
+    public Result<String> newQuestion(QuestionDTO questionDTO) {
+
     }
 }
