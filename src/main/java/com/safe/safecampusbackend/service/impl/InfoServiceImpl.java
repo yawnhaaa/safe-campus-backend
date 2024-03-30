@@ -215,7 +215,7 @@ public class InfoServiceImpl implements InfoService {
         }
 
         Date currentTime = new Date();
-        entity.setIsDelete(1);
+        entity.setIsDelete(2);
         entity.setInfoDate(currentTime);
         try {
             infoDAO.insert(entity);

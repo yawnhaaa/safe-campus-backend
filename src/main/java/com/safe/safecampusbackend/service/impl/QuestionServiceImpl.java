@@ -49,6 +49,7 @@ public class QuestionServiceImpl implements QuestionService {
                     vo.setAnalysis(question.getAnalysis());
                     vo.setIsSubmit(question.getIsSubmit());
                     vo.setIsDelete(question.getIsDelete());
+                    vo.setId(question.getId());
                     // 获取该问题对应的子表数据
                     List<QuestionContentEntity> contentList = filteredQuestionContentList.stream()
                             .filter(content -> content.getQuestionId().equals(question.getId()))

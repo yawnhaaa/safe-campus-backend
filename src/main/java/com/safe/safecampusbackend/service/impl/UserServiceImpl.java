@@ -6,9 +6,12 @@ import com.safe.safecampusbackend.dao.UserDAO;
 import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.dto.UserDetailDTO;
+import com.safe.safecampusbackend.model.entity.InfoUserEntity;
 import com.safe.safecampusbackend.model.entity.UserEntity;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserCollectVO;
 import com.safe.safecampusbackend.model.vo.UserDetailVO;
+import com.safe.safecampusbackend.model.vo.UserLikeVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
@@ -123,5 +126,13 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             return ResultUtil.error(-1, "网络错误");
         }
+    }
+
+    public Result<UserLikeVO> getLikeList(String username) {
+        QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
+    }
+
+    public Result<UserCollectVO> getCollectList(String username) {
+
     }
 }

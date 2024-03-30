@@ -4,7 +4,9 @@ import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserCollectVO;
 import com.safe.safecampusbackend.model.vo.UserDetailVO;
+import com.safe.safecampusbackend.model.vo.UserLikeVO;
 import com.safe.safecampusbackend.util.result.Result;
 
 public interface UserService {
@@ -47,4 +49,20 @@ public interface UserService {
      * @return 更新状态
      */
     Result<String> updateUserDetail(UserDetailDTO userDetailDTO);
+
+    /**
+     * 获取用户喜欢列表
+     *
+     * @param username 用户名
+     * @return 喜欢列表
+     */
+    Result<UserLikeVO> getLikeList(String username);
+
+    /**
+     * 获取用户收藏列表
+     *
+     * @param username 用户名
+     * @return 收藏列表
+     */
+    Result<UserCollectVO> getCollectList(String username);
 }

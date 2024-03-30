@@ -4,7 +4,9 @@ import com.safe.safecampusbackend.model.dto.LoginDTO;
 import com.safe.safecampusbackend.model.dto.RegisterDTO;
 import com.safe.safecampusbackend.model.dto.UserDetailDTO;
 import com.safe.safecampusbackend.model.vo.JWTVO;
+import com.safe.safecampusbackend.model.vo.UserCollectVO;
 import com.safe.safecampusbackend.model.vo.UserDetailVO;
+import com.safe.safecampusbackend.model.vo.UserLikeVO;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.jwt.JWTUtil;
 import com.safe.safecampusbackend.util.result.Result;
@@ -49,5 +51,15 @@ public class UserController {
     @PostMapping("/updateUserDetail")
     public Result<String> updateUserDetail(@RequestBody UserDetailDTO userDetailDTO) {
         return userService.updateUserDetail(userDetailDTO);
+    }
+
+    @GetMapping("/getLikeList/{username}")
+    public Result<UserLikeVO> getLikeList(@PathVariable String username) {
+        return userService.getLikeList(username);
+    }
+
+    @GetMapping("/getCollectList/{username}")
+    public Result<UserCollectVO> getCollectList(@PathVariable String username) {
+        return userService.getCollectList(username);
     }
 }

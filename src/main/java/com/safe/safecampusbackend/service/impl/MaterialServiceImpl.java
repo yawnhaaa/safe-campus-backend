@@ -185,7 +185,7 @@ public class MaterialServiceImpl implements MaterialService {
         }
 
         Date currentTime = new Date();
-        entity.setIsDelete(1);
+        entity.setIsDelete(2);
         entity.setMaterialDate(currentTime);
         try {
             materialDAO.insert(entity);
