@@ -131,6 +131,15 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(infoEntityList);
     }
 
+    public Result<InfoEntity> getInfoDetail(Long id) {
+        InfoEntity info = infoDAO.selectById(id);
+        if (info != null) {
+            return ResultUtil.success(info);
+        } else {
+            return ResultUtil.error(-1, "网络错误");
+        }
+    }
+
     public Result<String> noBanInfo(Long id) {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
@@ -187,7 +196,7 @@ public class AdminServiceImpl implements AdminService {
 
     public Result<List<InfoEntity>> getInfoReviewList() {
         QueryWrapper<InfoEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in("is_delete", 2);
+        queryWrapper.in("is_delete", 2, 3);
         List<InfoEntity> infoEntityList = infoDAO.selectList(queryWrapper);
         return ResultUtil.success(infoEntityList);
     }
@@ -207,7 +216,7 @@ public class AdminServiceImpl implements AdminService {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
         if (info.getIsDelete().equals(3)) {
-            return ResultUtil.error(-1, "启用状态");
+            return ResultUtil.error(-1, "驳回状态");
         }
         info.setIsDelete(3);
         infoDAO.updateById(info);
@@ -257,6 +266,15 @@ public class AdminServiceImpl implements AdminService {
         queryWrapper.eq("material_type", 2); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
+    }
+
+    public Result<MaterialEntity> getMaterialDetail(Long id) {
+        MaterialEntity material = materialDAO.selectById(id);
+        if (material != null) {
+            return ResultUtil.success(material);
+        } else {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 
     public Result<String> noBanMaterial(Long id) {
@@ -316,7 +334,8 @@ public class AdminServiceImpl implements AdminService {
 
     public Result<List<MaterialEntity>> getImageReviewList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_delete", 2);
+        queryWrapper.in("is_delete", 2, 3);
+        ;
         queryWrapper.eq("material_type", 0); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
@@ -324,7 +343,8 @@ public class AdminServiceImpl implements AdminService {
 
     public Result<List<MaterialEntity>> getVideoReviewList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_delete", 2);
+        queryWrapper.in("is_delete", 2, 3);
+        ;
         queryWrapper.eq("material_type", 1); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
@@ -332,7 +352,7 @@ public class AdminServiceImpl implements AdminService {
 
     public Result<List<MaterialEntity>> getAudioReviewList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("is_delete", 2);
+        queryWrapper.in("is_delete", 2, 3);
         queryWrapper.eq("material_type", 2); // 添加material_type条件
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         return ResultUtil.success(materialEntityList);
@@ -353,7 +373,7 @@ public class AdminServiceImpl implements AdminService {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(0)) {
-            return ResultUtil.error(-1, "启用状态");
+            return ResultUtil.error(-1, "驳回状态");
         }
         material.setIsDelete(3);
         materialDAO.updateById(material);

@@ -70,6 +70,11 @@ public class AdminController {
         return adminService.getInfoList();
     }
 
+    @GetMapping("/info/{id}")
+    public Result<InfoEntity> getInfoDetail(@PathVariable Long id) {
+        return adminService.getInfoDetail(id);
+    }
+
     @GetMapping("/noBanInfo/{id}")
     public Result<String> noBanInfo(@PathVariable Long id) {
         return adminService.noBanInfo(id);
@@ -138,6 +143,11 @@ public class AdminController {
     @GetMapping("/getAudioList")
     public Result<List<MaterialEntity>> getAudioList() {
         return adminService.getAudioList();
+    }
+
+    @GetMapping("/material/{id}")
+    public Result<MaterialEntity> getMaterialDetail(@PathVariable Long id) {
+        return adminService.getMaterialDetail(id);
     }
 
     @GetMapping("/noBanMaterial/{id}")

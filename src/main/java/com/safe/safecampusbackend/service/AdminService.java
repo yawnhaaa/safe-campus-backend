@@ -80,6 +80,14 @@ public interface AdminService {
     Result<List<InfoEntity>> getInfoList();
 
     /**
+     * 获取资讯详情
+     *
+     * @param id 资讯id
+     * @return 资讯详情
+     */
+    Result<InfoEntity> getInfoDetail(Long id);
+
+    /**
      * 启用资讯
      *
      * @param id 资讯id
@@ -186,6 +194,14 @@ public interface AdminService {
      * @return is_delete为0，1的列表
      */
     Result<List<MaterialEntity>> getAudioList();
+
+    /**
+     * 获取素材详情
+     *
+     * @param id 素材id
+     * @return 素材详情
+     */
+    Result<MaterialEntity> getMaterialDetail(Long id);
 
     /**
      * 启用入参id的数据
