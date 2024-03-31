@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -59,7 +58,7 @@ public class VisualServiceImpl implements VisualService {
         visualVOList.add(videoVO);
         VisualVO audioVO = new VisualVO();
         audioVO.setTitle("本站音频素材数量");
-        audioVO.setNumber(videoCount);
+        audioVO.setNumber(audioCount);
         visualVOList.add(audioVO);
         return ResultUtil.success(visualVOList);
     }
