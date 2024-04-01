@@ -94,7 +94,7 @@ public class InfoServiceImpl implements InfoService {
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", infoUserDTO.getUserName());
+        userQueryWrapper.eq("id", infoUserDTO.getId());
         UserEntity user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
@@ -107,9 +107,9 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserDTO.getUserName(), infoUserDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserDTO.getId(), infoUserDTO.getInfoId().toString());
         InfoUserEntity entity = new InfoUserEntity();
-        entity.setUserName(infoUserDTO.getUserName());
+        entity.setName(infoUserDTO.getId());
         entity.setInfoId(infoUserDTO.getInfoId());
         entity.setInfoUserId(compoundId);
         // 获取当前时间
@@ -153,7 +153,7 @@ public class InfoServiceImpl implements InfoService {
     public Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", infoUserStatusDTO.getUserName());
+        userQueryWrapper.eq("name", infoUserStatusDTO.getName());
         UserEntity user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
@@ -166,7 +166,7 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserStatusDTO.getUserName(), infoUserStatusDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserStatusDTO.getName(), infoUserStatusDTO.getInfoId().toString());
         // 检查复合id是否存在
         QueryWrapper<InfoUserEntity> infoUserQueryWrapper = new QueryWrapper<>();
         infoUserQueryWrapper.eq("info_user_id", compoundId);

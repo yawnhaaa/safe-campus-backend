@@ -19,8 +19,8 @@ public class InfoUserEntity {
     /**
      * 用户昵称
      */
-    @TableField("user_name")
-    private String userName;
+    @TableField("name")
+    private String name;
     /**
      * 资讯id
      */

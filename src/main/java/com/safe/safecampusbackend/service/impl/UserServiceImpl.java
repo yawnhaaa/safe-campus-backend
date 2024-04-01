@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
             return ResultUtil.error(-1, "验证码错误");
         }
         UserEntity userEntity = new UserEntity();
+        userEntity.setStuId(registerDTO.getStuId());
         userEntity.setName(registerDTO.getName());
         userEntity.setEmail(registerDTO.getEmail());
         String salt = SaltUtil.generateSalt();
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
         if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
             JWTVO jwtvo = new JWTVO();
             jwtvo.setJwt(JWTUtil.createJWT(loginDTO.getName(), 3600000));
-            jwtvo.setUserName(user.getName());
+            jwtvo.setName(user.getName());
             jwtvo.setUserId(user.getId());
             return ResultUtil.success(jwtvo);
         } else {
@@ -135,10 +136,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Result<List<UserLikeVO>> getLikeList(String username) {
+    public Result<List<UserLikeVO>> getLikeList(String name) {
         QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .eq("user_name", username)
+                .eq("name", name)
                 .eq("is_like", 1);
         List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
         List<UserLikeVO> userLikeVOList = new ArrayList<>();
@@ -153,10 +154,10 @@ public class UserServiceImpl implements UserService {
         return ResultUtil.success(userLikeVOList);
     }
 
-    public Result<List<UserCollectVO>> getCollectList(String username) {
+    public Result<List<UserCollectVO>> getCollectList(String name) {
         QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .eq("user_name", username)
+                .eq("name", name)
                 .eq("is_collect", 1);
         List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
         List<UserCollectVO> userCollectVOList = new ArrayList<>();

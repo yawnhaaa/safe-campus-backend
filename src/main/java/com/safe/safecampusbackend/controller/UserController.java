@@ -54,13 +54,13 @@ public class UserController {
         return userService.updateUserDetail(userDetailDTO);
     }
 
-    @GetMapping("/getLikeList/{username}")
-    public Result<List<UserLikeVO>> getLikeList(@PathVariable String username) {
-        return userService.getLikeList(username);
+    @GetMapping("/getLikeList/{name}")
+    public Result<List<UserLikeVO>> getLikeList(@PathVariable String name) {
+        return userService.getLikeList(name);
     }
 
-    @GetMapping("/getCollectList/{username}")
-    public Result<List<UserCollectVO>> getCollectList(@PathVariable String username) {
-        return userService.getCollectList(username);
+    @GetMapping("/getCollectList/{name}")
+    public Result<List<UserCollectVO>> getCollectList(@PathVariable String name) {
+        return userService.getCollectList(name);
     }
 }

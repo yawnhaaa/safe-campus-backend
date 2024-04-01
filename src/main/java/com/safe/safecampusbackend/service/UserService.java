@@ -55,16 +55,16 @@ public interface UserService {
     /**
      * 获取用户喜欢列表
      *
-     * @param username 用户名
+     * @param name 用户名
      * @return 喜欢列表
      */
-    Result<List<UserLikeVO>> getLikeList(String username);
+    Result<List<UserLikeVO>> getLikeList(String name);
 
     /**
      * 获取用户收藏列表
      *
-     * @param username 用户名
+     * @param name 用户名
      * @return 收藏列表
      */
-    Result<List<UserCollectVO>> getCollectList(String username);
+    Result<List<UserCollectVO>> getCollectList(String name);
 }

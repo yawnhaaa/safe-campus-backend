@@ -15,6 +15,11 @@ public class UserEntity {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
+     * 学号
+     */
+    @TableField("stu_id")
+    private String stuId;
+    /**
      * 昵称
      */
     @TableField("name")
@@ -55,10 +60,10 @@ public class UserEntity {
     @TableField("college")
     private String college;
     /**
-     * 学号
+     * 班级
      */
-    @TableField("stu_num")
-    private String stuNum;
+    @TableField("stu_class")
+    private String stuClass;
     /**
      * 逻辑删除: 0 可用, 1 不可用
      */
