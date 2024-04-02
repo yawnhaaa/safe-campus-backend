@@ -88,7 +88,7 @@ public class InfoServiceImpl implements InfoService {
     /**
      * 用户点赞、收藏资讯操作
      *
-     * @param infoUserDTO 用户昵称、资讯id、操作类型：0喜欢、1收藏
+     * @param infoUserDTO 用户id、资讯id、操作类型：0喜欢、1收藏
      * @return 成功与失败，靠code区分
      */
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
@@ -107,7 +107,7 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserDTO.getId(), infoUserDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserDTO.getId(), infoUserDTO.getInfoId());
         InfoUserEntity entity = new InfoUserEntity();
         entity.setName(infoUserDTO.getId());
         entity.setInfoId(infoUserDTO.getInfoId());
@@ -152,9 +152,7 @@ public class InfoServiceImpl implements InfoService {
      */
     public Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO) {
         // 检查用户是否存在
-        QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", infoUserStatusDTO.getName());
-        UserEntity user = userDao.selectOne(userQueryWrapper);
+        UserEntity user = userDao.selectById(infoUserStatusDTO.getUserId());
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
         }
@@ -166,7 +164,7 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserStatusDTO.getName(), infoUserStatusDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserStatusDTO.getUserId(), infoUserStatusDTO.getInfoId());
         // 检查复合id是否存在
         QueryWrapper<InfoUserEntity> infoUserQueryWrapper = new QueryWrapper<>();
         infoUserQueryWrapper.eq("info_user_id", compoundId);

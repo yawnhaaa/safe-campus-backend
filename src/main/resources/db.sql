@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS `info_user`;
 CREATE TABLE `info_user`
 (
     id           bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
-    name         varchar(10)  NOT NULL COMMENT '用户昵称',
+    user_id      bigint(20)   NOT NULL COMMENT '用户id',
     info_id      bigint(20)   NOT NULL COMMENT '资讯id',
     info_user_id varchar(100) NOT NULL COMMENT '复合id',
     is_like      tinyint(1) DEFAULT 0 COMMENT '是否喜欢',

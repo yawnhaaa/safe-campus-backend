@@ -37,7 +37,7 @@ public class Util {
      * @param itemId 内容id
      * @return 复合id
      */
-    public static String compoundId(String userId, String itemId) {
-        return userId + '_' + itemId;
+    public static String compoundId(Long userId, Long itemId) {
+        return userId.toString() + '_' + itemId.toString();
     }
 }
