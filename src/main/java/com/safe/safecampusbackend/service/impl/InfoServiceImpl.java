@@ -109,7 +109,7 @@ public class InfoServiceImpl implements InfoService {
         // 生成复合id
         String compoundId = Util.compoundId(infoUserDTO.getId(), infoUserDTO.getInfoId());
         InfoUserEntity entity = new InfoUserEntity();
-        entity.setName(infoUserDTO.getId());
+        entity.setUserId(infoUserDTO.getId());
         entity.setInfoId(infoUserDTO.getInfoId());
         entity.setInfoUserId(compoundId);
         // 获取当前时间

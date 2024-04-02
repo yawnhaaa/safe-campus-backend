@@ -20,7 +20,7 @@ public class InfoUserEntity {
      * 用户昵称
      */
     @TableField("user_id")
-    private String userId;
+    private Long userId;
     /**
      * 资讯id
      */
