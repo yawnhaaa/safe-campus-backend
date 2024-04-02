@@ -29,7 +29,7 @@ public interface InfoService {
     /**
      * 用户点赞、收藏资讯操作
      *
-     * @param infoUserDTO 用户昵称、资讯id、操作类型：0喜欢、1收藏
+     * @param infoUserDTO 用户id、资讯id、操作类型：0喜欢、1收藏
      * @return 成功与失败，靠code区分
      */
     Result<String> handleInfo(InfoUserDTO infoUserDTO);
@@ -37,7 +37,7 @@ public interface InfoService {
     /**
      * 获取用户点赞、收藏状态
      *
-     * @param infoUserStatusDTO 用户昵称、资讯id
+     * @param infoUserStatusDTO 用户id、资讯id
      * @return 点赞、收藏状态
      */
     Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO);

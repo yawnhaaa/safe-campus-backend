@@ -94,7 +94,7 @@ public class InfoServiceImpl implements InfoService {
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("id", infoUserDTO.getId());
+        userQueryWrapper.eq("id", infoUserDTO.getUserId());
         UserEntity user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
@@ -107,9 +107,9 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserDTO.getId(), infoUserDTO.getInfoId());
+        String compoundId = Util.compoundId(infoUserDTO.getUserId(), infoUserDTO.getInfoId());
         InfoUserEntity entity = new InfoUserEntity();
-        entity.setUserId(infoUserDTO.getId());
+        entity.setUserId(infoUserDTO.getUserId());
         entity.setInfoId(infoUserDTO.getInfoId());
         entity.setInfoUserId(compoundId);
         // 获取当前时间
@@ -172,7 +172,7 @@ public class InfoServiceImpl implements InfoService {
         InfoUserStatusVO entity = new InfoUserStatusVO();
         if (infoUserEntity == null) {
             entity.setLikeStatus(false);
-            entity.setLikeStatus(false);
+            entity.setCollectStatus(false);
         } else {
             entity.setLikeStatus(infoUserEntity.getIsLike().equals(1));
             entity.setCollectStatus(infoUserEntity.getIsCollect().equals(1));

@@ -22,12 +22,12 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public Result<String> register(@RequestBody RegisterDTO registerDTO) {
         return userService.register(registerDTO);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public Result<JWTVO> login(@RequestBody LoginDTO loginDTO) {
         return userService.login(loginDTO);
     }
@@ -40,8 +40,8 @@ public class UserController {
     @PostMapping("/verifyUser")
     public Result<Boolean> verifyUser(@RequestBody HashMap<String, String> request) {
         String jwt = request.get("jwt");
-        String user = request.get("user");
-        return ResultUtil.success(JWTUtil.validateJWT(jwt, user));
+        String stuId = request.get("stuId");
+        return ResultUtil.success(JWTUtil.validateJWT(jwt, stuId));
     }
 
     @GetMapping("/getUserDetail/{id}")
@@ -54,13 +54,13 @@ public class UserController {
         return userService.updateUserDetail(userDetailDTO);
     }
 
-    @GetMapping("/getLikeList/{name}")
-    public Result<List<UserLikeVO>> getLikeList(@PathVariable String name) {
-        return userService.getLikeList(name);
+    @GetMapping("/getLikeList/{userId}")
+    public Result<List<UserLikeVO>> getLikeList(@PathVariable Long userId) {
+        return userService.getLikeList(userId);
     }
 
-    @GetMapping("/getCollectList/{name}")
-    public Result<List<UserCollectVO>> getCollectList(@PathVariable String name) {
-        return userService.getCollectList(name);
+    @GetMapping("/getCollectList/{userId}")
+    public Result<List<UserCollectVO>> getCollectList(@PathVariable Long userId) {
+        return userService.getCollectList(userId);
     }
 }

@@ -18,7 +18,8 @@ CREATE TABLE `users`
     `college`   varchar(20) COMMENT '学院',
     `stu_class` varchar(20) COMMENT '班级',
     `is_delete` tinyint(1)  NOT NULL DEFAULT 0 COMMENT '逻辑删除',
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_userId` (`stu_id`)
 );
 
 DROP TABLE IF EXISTS `admin`;
