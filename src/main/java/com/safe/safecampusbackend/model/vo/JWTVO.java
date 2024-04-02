@@ -6,5 +6,5 @@ import lombok.Data;
 public class JWTVO {
     private String jwt;
     private Long userId;
-    private String userName;
+    private String name;
 }

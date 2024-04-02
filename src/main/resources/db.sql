@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
     `id`        bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `stu_id`    varchar(20) NOT NULL COMMENT '学号',
     `name`      varchar(10) NOT NULL COMMENT '昵称',
     `email`     varchar(50) NOT NULL COMMENT '邮箱',
     `passwd`    varchar(64) NOT NULL COMMENT '密码',
@@ -15,9 +16,10 @@ CREATE TABLE `users`
     `gender`    tinyint(1) COMMENT '性别',
     `school`    varchar(20) COMMENT '学校',
     `college`   varchar(20) COMMENT '学院',
-    `stu_num`   varchar(20) COMMENT '学号',
+    `stu_class` varchar(20) COMMENT '班级',
     `is_delete` tinyint(1)  NOT NULL DEFAULT 0 COMMENT '逻辑删除',
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_userId` (`stu_id`)
 );
 
 DROP TABLE IF EXISTS `admin`;
@@ -88,7 +90,7 @@ DROP TABLE IF EXISTS `info_user`;
 CREATE TABLE `info_user`
 (
     id           bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
-    user_name    varchar(10)  NOT NULL COMMENT '用户昵称',
+    user_id      bigint(20)   NOT NULL COMMENT '用户id',
     info_id      bigint(20)   NOT NULL COMMENT '资讯id',
     info_user_id varchar(100) NOT NULL COMMENT '复合id',
     is_like      tinyint(1) DEFAULT 0 COMMENT '是否喜欢',

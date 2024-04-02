@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InfoUserDTO {
-    private String userName;
+    private Long userId;
     private Long infoId;
     private int type;
     private Boolean isStatus;

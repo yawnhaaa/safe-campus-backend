@@ -38,22 +38,23 @@ public class UserServiceImpl implements UserService {
     private final InfoUserDAO infoUserDAO;
 
     public Result<String> register(RegisterDTO registerDTO) {
+        QueryWrapper<UserEntity> stuIdQueryWrapper = new QueryWrapper<>();
+        stuIdQueryWrapper.eq("stu_id", registerDTO.getEmail());
+        UserEntity stuIdUser = userDao.selectOne(stuIdQueryWrapper);
+        if (stuIdUser != null) {
+            return ResultUtil.error(-1, "该学号已注册");
+        }
         QueryWrapper<UserEntity> emailQueryWrapper = new QueryWrapper<>();
         emailQueryWrapper.eq("email", registerDTO.getEmail());
         UserEntity emailUser = userDao.selectOne(emailQueryWrapper);
         if (emailUser != null) {
             return ResultUtil.error(-1, "该邮箱已注册");
         }
-        QueryWrapper<UserEntity> nameQueryWrapper = new QueryWrapper<>();
-        nameQueryWrapper.eq("name", registerDTO.getName());
-        UserEntity nameUser = userDao.selectOne(nameQueryWrapper);
-        if (nameUser != null) {
-            return ResultUtil.error(-1, "该昵称已使用");
-        }
         if (!registerDTO.getCode().equals(RedisUtil.getCache(registerDTO.getEmail()))) {
             return ResultUtil.error(-1, "验证码错误");
         }
         UserEntity userEntity = new UserEntity();
+        userEntity.setStuId(registerDTO.getStuId());
         userEntity.setName(registerDTO.getName());
         userEntity.setEmail(registerDTO.getEmail());
         String salt = SaltUtil.generateSalt();
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     public Result<JWTVO> login(LoginDTO loginDTO) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", loginDTO.getName());
+        queryWrapper.eq("stu_id", loginDTO.getStuId());
         UserEntity user = userDao.selectOne(queryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户不存在");
@@ -81,8 +82,8 @@ public class UserServiceImpl implements UserService {
         String passwd = loginDTO.getPasswd();
         if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
             JWTVO jwtvo = new JWTVO();
-            jwtvo.setJwt(JWTUtil.createJWT(loginDTO.getName(), 3600000));
-            jwtvo.setUserName(user.getName());
+            jwtvo.setJwt(JWTUtil.createJWT(loginDTO.getStuId(), 3600000));
+            jwtvo.setName(user.getName());
             jwtvo.setUserId(user.getId());
             return ResultUtil.success(jwtvo);
         } else {
@@ -135,10 +136,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Result<List<UserLikeVO>> getLikeList(String username) {
+    public Result<List<UserLikeVO>> getLikeList(Long userId) {
         QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .eq("user_name", username)
+                .eq("user_id", userId)
                 .eq("is_like", 1);
         List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
         List<UserLikeVO> userLikeVOList = new ArrayList<>();
@@ -153,10 +154,10 @@ public class UserServiceImpl implements UserService {
         return ResultUtil.success(userLikeVOList);
     }
 
-    public Result<List<UserCollectVO>> getCollectList(String username) {
+    public Result<List<UserCollectVO>> getCollectList(Long userId) {
         QueryWrapper<InfoUserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper
-                .eq("user_name", username)
+                .eq("user_id", userId)
                 .eq("is_collect", 1);
         List<InfoUserEntity> infoUserEntityList = infoUserDAO.selectList(queryWrapper);
         List<UserCollectVO> userCollectVOList = new ArrayList<>();

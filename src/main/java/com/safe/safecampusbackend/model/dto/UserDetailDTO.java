@@ -10,5 +10,5 @@ public class UserDetailDTO {
     private Integer gender;
     private String school;
     private String college;
-    private String stuNum;
+    private String stuClass;
 }

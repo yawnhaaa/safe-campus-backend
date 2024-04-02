@@ -88,13 +88,13 @@ public class InfoServiceImpl implements InfoService {
     /**
      * 用户点赞、收藏资讯操作
      *
-     * @param infoUserDTO 用户昵称、资讯id、操作类型：0喜欢、1收藏
+     * @param infoUserDTO 用户id、资讯id、操作类型：0喜欢、1收藏
      * @return 成功与失败，靠code区分
      */
     public Result<String> handleInfo(InfoUserDTO infoUserDTO) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", infoUserDTO.getUserName());
+        userQueryWrapper.eq("id", infoUserDTO.getUserId());
         UserEntity user = userDao.selectOne(userQueryWrapper);
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
@@ -107,9 +107,9 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserDTO.getUserName(), infoUserDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserDTO.getUserId(), infoUserDTO.getInfoId());
         InfoUserEntity entity = new InfoUserEntity();
-        entity.setUserName(infoUserDTO.getUserName());
+        entity.setUserId(infoUserDTO.getUserId());
         entity.setInfoId(infoUserDTO.getInfoId());
         entity.setInfoUserId(compoundId);
         // 获取当前时间
@@ -152,9 +152,7 @@ public class InfoServiceImpl implements InfoService {
      */
     public Result<InfoUserStatusVO> getInfoUserStatus(InfoUserStatusDTO infoUserStatusDTO) {
         // 检查用户是否存在
-        QueryWrapper<UserEntity> userQueryWrapper = new QueryWrapper<>();
-        userQueryWrapper.eq("name", infoUserStatusDTO.getUserName());
-        UserEntity user = userDao.selectOne(userQueryWrapper);
+        UserEntity user = userDao.selectById(infoUserStatusDTO.getUserId());
         if (user == null) {
             return ResultUtil.error(-1, "该用户就不存在，怎么调的接口！");
         }
@@ -166,7 +164,7 @@ public class InfoServiceImpl implements InfoService {
             return ResultUtil.error(-1, "该资讯就不存在，怎么调的接口！");
         }
         // 生成复合id
-        String compoundId = Util.compoundId(infoUserStatusDTO.getUserName(), infoUserStatusDTO.getInfoId().toString());
+        String compoundId = Util.compoundId(infoUserStatusDTO.getUserId(), infoUserStatusDTO.getInfoId());
         // 检查复合id是否存在
         QueryWrapper<InfoUserEntity> infoUserQueryWrapper = new QueryWrapper<>();
         infoUserQueryWrapper.eq("info_user_id", compoundId);
@@ -174,7 +172,7 @@ public class InfoServiceImpl implements InfoService {
         InfoUserStatusVO entity = new InfoUserStatusVO();
         if (infoUserEntity == null) {
             entity.setLikeStatus(false);
-            entity.setLikeStatus(false);
+            entity.setCollectStatus(false);
         } else {
             entity.setLikeStatus(infoUserEntity.getIsLike().equals(1));
             entity.setCollectStatus(infoUserEntity.getIsCollect().equals(1));
