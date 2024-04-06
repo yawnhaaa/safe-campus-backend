@@ -1,7 +1,6 @@
 package com.safe.safecampusbackend.controller;
 
 import com.safe.safecampusbackend.model.dto.PoliceDTO;
-import com.safe.safecampusbackend.model.entity.PoliceEntity;
 import com.safe.safecampusbackend.model.vo.PoliceAdminListVO;
 import com.safe.safecampusbackend.model.vo.PoliceListVO;
 import com.safe.safecampusbackend.model.vo.PoliceVO;
