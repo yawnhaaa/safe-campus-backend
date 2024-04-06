@@ -41,6 +41,12 @@ public class Util {
         return userId.toString() + '_' + itemId.toString();
     }
 
+    /**
+     * 坐标点格式成精度数组
+     *
+     * @param str 坐标点字符串
+     * @return 精度数组
+     */
     public static Double[] stringToDoubleArray(String str) {
         str = str.substring(1, str.length() - 1); // 去掉前后的方括号
         String[] parts = str.split(", ");
@@ -51,7 +57,14 @@ public class Util {
         return result;
     }
 
-    public static String intArrayToString(int num1, int num2) {
+    /**
+     * 两个精度入参转成坐标点字符串
+     *
+     * @param num1 经度
+     * @param num2 纬度
+     * @return 坐标点字符串
+     */
+    public static String doubleArrayToString(Double num1, Double num2) {
         return "[" + num1 + ", " + num2 + "]";
     }
 }

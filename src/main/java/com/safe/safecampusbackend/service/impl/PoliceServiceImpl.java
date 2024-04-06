@@ -88,11 +88,32 @@ public class PoliceServiceImpl implements PoliceService {
         }
     }
 
+    public Result<String> deletePoliceById(Long id) {
+        policeDAO.deleteById(id);
+        return ResultUtil.success("删除成功");
+    }
+
     public Result<String> newPolice(PoliceDTO policeDTO) {
-        return ResultUtil.success("666");
+        PoliceEntity entity = new PoliceEntity();
+        BeanUtils.copyProperties(policeDTO, entity);
+        entity.setLongLa(Util.doubleArrayToString(policeDTO.getLongitude(), policeDTO.getLatitude()));
+        try {
+            policeDAO.insert(entity);
+            return ResultUtil.success("新增成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 
     public Result<String> updatePolice(PoliceDTO policeDTO) {
-        return ResultUtil.success("666");
+        PoliceEntity entity = new PoliceEntity();
+        BeanUtils.copyProperties(policeDTO, entity);
+        entity.setLongLa(Util.doubleArrayToString(policeDTO.getLongitude(), policeDTO.getLatitude()));
+        try {
+            policeDAO.updateById(entity);
+            return ResultUtil.success("更新成功");
+        } catch (Exception e) {
+            return ResultUtil.error(-1, "网络错误");
+        }
     }
 }

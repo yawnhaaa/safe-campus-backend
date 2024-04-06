@@ -49,6 +49,14 @@ public interface PoliceService {
     Result<String> noBanPoliceById(Long id);
 
     /**
+     * 删除坐标点
+     *
+     * @param id id
+     * @return 结果
+     */
+    Result<String> deletePoliceById(Long id);
+
+    /**
      * 新增数据
      *
      * @param policeDTO 数据必要字段

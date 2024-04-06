@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class PoliceDTO {
     private Long id;
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
     private String name;
     private String address;
     private String intro;

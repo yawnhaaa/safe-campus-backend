@@ -41,6 +41,11 @@ public class PoliceController {
         return policeService.noBanPoliceById(id);
     }
 
+    @GetMapping("/deletePoliceById/{id}")
+    public Result<String> deletePoliceById(@PathVariable Long id) {
+        return policeService.deletePoliceById(id);
+    }
+
     @PostMapping("/newPolice")
     public Result<String> newPolice(@RequestBody PoliceDTO policeDTO) {
         return policeService.newPolice(policeDTO);

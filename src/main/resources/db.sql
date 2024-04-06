@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS police
 (
     id        bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键',
     long_la   varchar(200)  NOT NULL COMMENT '经纬度，[经度, 纬度]',
-    name      varchar(20)  NOT NULL COMMENT '名称',
+    name      varchar(50)  NOT NULL COMMENT '名称',
     address   varchar(50)  NOT NULL COMMENT '地址',
     intro     varchar(500) NOT NULL COMMENT '介绍',
     tel       varchar(20)  NOT NULL COMMENT '联系方式',
