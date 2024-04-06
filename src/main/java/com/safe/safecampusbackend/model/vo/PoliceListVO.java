@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class PoliceListVO {
     private Long id;
-    private String longLa;
+    private Double[] point;
 }

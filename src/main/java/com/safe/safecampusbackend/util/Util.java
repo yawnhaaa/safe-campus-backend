@@ -40,4 +40,18 @@ public class Util {
     public static String compoundId(Long userId, Long itemId) {
         return userId.toString() + '_' + itemId.toString();
     }
+
+    public static Double[] stringToDoubleArray(String str) {
+        str = str.substring(1, str.length() - 1); // 去掉前后的方括号
+        String[] parts = str.split(", ");
+        Double[] result = new Double[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            result[i] = Double.parseDouble(parts[i]);
+        }
+        return result;
+    }
+
+    public static String intArrayToString(int num1, int num2) {
+        return "[" + num1 + ", " + num2 + "]";
+    }
 }

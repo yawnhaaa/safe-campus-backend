@@ -2,6 +2,7 @@ package com.safe.safecampusbackend.service;
 
 import com.safe.safecampusbackend.model.dto.PoliceDTO;
 import com.safe.safecampusbackend.model.entity.PoliceEntity;
+import com.safe.safecampusbackend.model.vo.PoliceAdminListVO;
 import com.safe.safecampusbackend.model.vo.PoliceListVO;
 import com.safe.safecampusbackend.model.vo.PoliceVO;
 import com.safe.safecampusbackend.util.result.Result;
@@ -29,7 +30,7 @@ public interface PoliceService {
      *
      * @return 获得所有数据
      */
-    Result<List<PoliceEntity>> getAdminPoliceList();
+    Result<List<PoliceAdminListVO>> getAdminPoliceList();
 
     /**
      * 禁用该数据

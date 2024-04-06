@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.PoliceDAO;
 import com.safe.safecampusbackend.model.dto.PoliceDTO;
 import com.safe.safecampusbackend.model.entity.PoliceEntity;
+import com.safe.safecampusbackend.model.vo.PoliceAdminListVO;
 import com.safe.safecampusbackend.model.vo.PoliceListVO;
 import com.safe.safecampusbackend.model.vo.PoliceVO;
 import com.safe.safecampusbackend.service.PoliceService;
+import com.safe.safecampusbackend.util.Util;
 import com.safe.safecampusbackend.util.result.Result;
 import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
@@ -40,13 +42,22 @@ public class PoliceServiceImpl implements PoliceService {
         for (PoliceEntity entity : policeEntityList) {
             PoliceListVO policeListVO = new PoliceListVO();
             BeanUtils.copyProperties(entity, policeListVO);
+            policeListVO.setPoint(Util.stringToDoubleArray(entity.getLongLa()));
             policeListVOList.add(policeListVO);
         }
         return ResultUtil.success(policeListVOList);
     }
 
-    public Result<List<PoliceEntity>> getAdminPoliceList() {
-        return ResultUtil.success(policeDAO.selectList(null));
+    public Result<List<PoliceAdminListVO>> getAdminPoliceList() {
+        List<PoliceEntity> policeEntityList = policeDAO.selectList(null);
+        List<PoliceAdminListVO> policeAdminListVOList = new ArrayList<>();
+        for (PoliceEntity entity : policeEntityList) {
+            PoliceAdminListVO policeAdminListVO = new PoliceAdminListVO();
+            BeanUtils.copyProperties(entity, policeAdminListVO);
+            policeAdminListVO.setPoint(Util.stringToDoubleArray(entity.getLongLa()));
+            policeAdminListVOList.add(policeAdminListVO);
+        }
+        return ResultUtil.success(policeAdminListVOList);
     }
 
     public Result<String> banPoliceById(Long id) {
