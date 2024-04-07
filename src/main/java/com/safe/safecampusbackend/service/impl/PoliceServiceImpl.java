@@ -3,6 +3,7 @@ package com.safe.safecampusbackend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.safe.safecampusbackend.dao.PoliceDAO;
 import com.safe.safecampusbackend.model.dto.PoliceDTO;
+import com.safe.safecampusbackend.model.entity.MaterialEntity;
 import com.safe.safecampusbackend.model.entity.PoliceEntity;
 import com.safe.safecampusbackend.model.vo.PoliceAdminListVO;
 import com.safe.safecampusbackend.model.vo.PoliceListVO;
@@ -103,6 +104,33 @@ public class PoliceServiceImpl implements PoliceService {
         } catch (Exception e) {
             return ResultUtil.error(-1, "网络错误");
         }
+    }
+
+    public Result<String> noBanPoliceList(List<Long> idList) {
+        for (Long id : idList) {
+            PoliceEntity police = policeDAO.selectById(id);
+            if (police == null) return ResultUtil.error(-1, "网络错误");
+            police.setIsDelete(0);
+            policeDAO.updateById(police);
+        }
+        return ResultUtil.success("启用成功");
+    }
+
+    public Result<String> banPoliceList(List<Long> idList) {
+        for (Long id : idList) {
+            PoliceEntity police = policeDAO.selectById(id);
+            if (police == null) return ResultUtil.error(-1, "网络错误");
+            police.setIsDelete(1);
+            policeDAO.updateById(police);
+        }
+        return ResultUtil.success("禁用成功");
+    }
+
+    public Result<String> deletePoliceList(List<Long> idList) {
+        for (Long id : idList) {
+            policeDAO.deleteById(id);
+        }
+        return ResultUtil.success("删除成功");
     }
 
     public Result<String> updatePolice(PoliceDTO policeDTO) {

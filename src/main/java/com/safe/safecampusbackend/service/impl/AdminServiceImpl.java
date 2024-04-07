@@ -296,7 +296,7 @@ public class AdminServiceImpl implements AdminService {
             material.setIsDelete(0);
             materialDAO.updateById(material);
         }
-        return ResultUtil.success("启动成功");
+        return ResultUtil.success("启用成功");
     }
 
     public Result<String> banMaterial(Long id) {

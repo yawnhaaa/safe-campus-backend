@@ -57,6 +57,30 @@ public interface PoliceService {
     Result<String> deletePoliceById(Long id);
 
     /**
+     * 解禁数据列表
+     *
+     * @param idList 主键列表
+     * @return 结果
+     */
+    Result<String> noBanPoliceList(List<Long> idList);
+
+    /**
+     * 禁用数据列表
+     *
+     * @param idList 主键列表
+     * @return 结果
+     */
+    Result<String> banPoliceList(List<Long> idList);
+
+    /**
+     * 删除数据列表
+     *
+     * @param idList 主键列表
+     * @return 结果
+     */
+    Result<String> deletePoliceList(List<Long> idList);
+
+    /**
      * 新增数据
      *
      * @param policeDTO 数据必要字段
