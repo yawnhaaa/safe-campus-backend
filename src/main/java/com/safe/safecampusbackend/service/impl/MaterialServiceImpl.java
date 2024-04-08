@@ -56,11 +56,13 @@ public class MaterialServiceImpl implements MaterialService {
     public Result<List<MaterialListVO>> getVideoList() {
         QueryWrapper<MaterialEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("material_type", 1);
+        // 获取视频素材列表
         List<MaterialEntity> materialEntityList = materialDAO.selectList(queryWrapper);
         if (materialEntityList != null && !materialEntityList.isEmpty()) {
             List<MaterialListVO> materialListVOList = new ArrayList<>();
             for (MaterialEntity materialEntity : materialEntityList) {
-                if (materialEntity.getIsDelete() == 0) { // 根据 is_delete 字段进行判断
+                // 根据 is_delete 字段进行判断正常素材
+                if (materialEntity.getIsDelete() == 0) {
                     MaterialListVO materialListVO = new MaterialListVO();
                     try {
                         BeanUtils.copyProperties(materialEntity, materialListVO);
@@ -87,6 +89,7 @@ public class MaterialServiceImpl implements MaterialService {
                 if (materialEntity.getIsDelete() == 0) { // 根据 is_delete 字段进行判断
                     MaterialListVO materialListVO = new MaterialListVO();
                     try {
+                        // 对象深拷贝至vo对象
                         BeanUtils.copyProperties(materialEntity, materialListVO);
                         materialListVOList.add(materialListVO);
                     } catch (Exception e) {
@@ -95,6 +98,7 @@ public class MaterialServiceImpl implements MaterialService {
                     }
                 }
             }
+            // 输出vo对象
             return ResultUtil.success(materialListVOList);
         } else {
             return ResultUtil.success(new ArrayList<>());
@@ -102,13 +106,16 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     public Result<MaterialVO> getMaterial(Long id) {
+        // 通过主键找到素材
         MaterialEntity entity = materialDAO.selectById(id);
         if (entity != null) {
             if (entity.getIsDelete() != 0) {
                 return ResultUtil.error(-1, "无此素材");
             }
             MaterialVO materialVO = new MaterialVO();
+            // 对象深拷贝至vo对象
             BeanUtils.copyProperties(entity, materialVO);
+            // 输出vo对象
             return ResultUtil.success(materialVO);
         }
         return ResultUtil.error(-1, "网络错误");
@@ -133,21 +140,27 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     public Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO) {
+        // 异常处理
         if (issueMaterialDTO.getTitle() == null) {
             return ResultUtil.error(-1, "标题不能为空");
         }
+        // 异常处理
         if (issueMaterialDTO.getAuthor() == null) {
             return ResultUtil.error(-1, "网络错误");
         }
+        // 异常处理
         if (issueMaterialDTO.getAuthorId() == null) {
             return ResultUtil.error(-1, "网络错误");
         }
+        // 异常处理
         if (issueMaterialDTO.getMaterialType() == null) {
             return ResultUtil.error(-1, "素材类型不能为空");
         }
+        // 异常处理
         if (issueMaterialDTO.getFile() == null) {
             return ResultUtil.error(-1, "素材不能为空");
         }
+        // 初始化对象
         MaterialEntity entity = new MaterialEntity();
         BeanUtils.copyProperties(issueMaterialDTO, entity);
         LocalDateTime now = LocalDateTime.now();

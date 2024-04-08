@@ -50,21 +50,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public Result<String> sendComment(CommentDTO commentDTO) {
+        // 异常处理
         if (commentDTO.getInfoId() == null) {
             return ResultUtil.error(-1, "网络错误");
         }
+        // 异常处理
         if (Objects.equals(commentDTO.getComment(), "")) {
             return ResultUtil.error(-1, "评论不能为空");
         }
+        // 异常处理
         if (commentDTO.getCommentId() == null) {
             return ResultUtil.error(-1, "网络错误");
         }
+        // 异常处理
         if (Objects.equals(commentDTO.getCommentName(), "")) {
             return ResultUtil.error(-1, "网络错误");
         }
 
+        // 初始化评论实体
         CommentEntity commentEntity = new CommentEntity();
         BeanUtils.copyProperties(commentDTO, commentEntity);
+        // 生成日期
         Date currentDate = new Date();
         commentEntity.setCommentTime(currentDate);
         try {

@@ -41,18 +41,22 @@ public class UserServiceImpl implements UserService {
         QueryWrapper<UserEntity> stuIdQueryWrapper = new QueryWrapper<>();
         stuIdQueryWrapper.eq("stu_id", registerDTO.getEmail());
         UserEntity stuIdUser = userDao.selectOne(stuIdQueryWrapper);
+        // 异常处理
         if (stuIdUser != null) {
             return ResultUtil.error(-1, "该学号已注册");
         }
         QueryWrapper<UserEntity> emailQueryWrapper = new QueryWrapper<>();
         emailQueryWrapper.eq("email", registerDTO.getEmail());
         UserEntity emailUser = userDao.selectOne(emailQueryWrapper);
+        // 异常处理
         if (emailUser != null) {
             return ResultUtil.error(-1, "该邮箱已注册");
         }
+        // 异常处理
         if (!registerDTO.getCode().equals(RedisUtil.getCache(registerDTO.getEmail()))) {
             return ResultUtil.error(-1, "验证码错误");
         }
+        // 初始化用户类对象
         UserEntity userEntity = new UserEntity();
         userEntity.setStuId(registerDTO.getStuId());
         userEntity.setName(registerDTO.getName());
@@ -62,6 +66,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPasswd(passwd);
         userEntity.setSalt(salt);
         try {
+            // 数据入库
             userDao.insert(userEntity);
             return ResultUtil.success("注册成功");
         } catch (Exception e) {
@@ -72,14 +77,18 @@ public class UserServiceImpl implements UserService {
     public Result<JWTVO> login(LoginDTO loginDTO) {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("stu_id", loginDTO.getStuId());
+        // 找到该用户
         UserEntity user = userDao.selectOne(queryWrapper);
+        // 异常处理
         if (user == null) {
             return ResultUtil.error(-1, "该用户不存在");
         }
+        // 异常处理
         if (user.getIsDelete().equals(1)) {
             return ResultUtil.error(-1, "该用户被禁用，请联系系统管理员");
         }
         String passwd = loginDTO.getPasswd();
+        // 用户入参密码混合盐与加密密码对比
         if (SaltUtil.verifySalt(passwd, user.getSalt(), user.getPasswd())) {
             JWTVO jwtvo = new JWTVO();
             jwtvo.setJwt(JWTUtil.createJWT(loginDTO.getStuId(), 3600000));

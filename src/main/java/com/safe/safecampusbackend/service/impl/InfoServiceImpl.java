@@ -45,8 +45,10 @@ public class InfoServiceImpl implements InfoService {
      * @return 资讯列表
      */
     public Result<List<InfoListVO>> getInfoList() {
+        // 获取所有资讯数据
         List<InfoEntity> infoEntityList = infoDAO.selectList(null);
         List<InfoListVO> infoListVOList = infoEntityList.stream()
+                // 使用过滤器将未被限流的资讯过滤出
                 .filter(infoEntity -> infoEntity.getIsDelete() == 0)
                 .map(infoEntity -> {
                     InfoListVO infoListVO = new InfoListVO();
@@ -68,6 +70,7 @@ public class InfoServiceImpl implements InfoService {
      * @return 资讯内容
      */
     public Result<InfoVO> getInfoById(String id) {
+        // 根据主键拿到资讯实体
         InfoEntity infoEntity = infoDAO.selectById(id);
         if (infoEntity != null) {
             if (infoEntity.getIsDelete() != 0) {

@@ -31,9 +31,11 @@ public class AdminServiceImpl implements AdminService {
 
     // user逻辑开始
     public Result<List<UserListAdminVO>> getUserList() {
+        // 获取所有用户
         List<UserEntity> userList = userDAO.selectList(null);
         List<UserListAdminVO> userListAdminVO = userList.stream()
                 .map(user -> {
+                    // 批量深拷贝进对象
                     UserListAdminVO userListAdminVOItem = new UserListAdminVO();
                     BeanUtils.copyProperties(user, userListAdminVOItem);
 
@@ -128,11 +130,13 @@ public class AdminServiceImpl implements AdminService {
     public Result<List<InfoEntity>> getInfoList() {
         QueryWrapper<InfoEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("is_delete", 0, 1);
+        // 获取全部资讯
         List<InfoEntity> infoEntityList = infoDAO.selectList(queryWrapper);
         return ResultUtil.success(infoEntityList);
     }
 
     public Result<InfoEntity> getInfoDetail(Long id) {
+        // 获取资讯详情
         InfoEntity info = infoDAO.selectById(id);
         if (info != null) {
             return ResultUtil.success(info);
@@ -152,6 +156,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("启用成功");
     }
 
+    // 禁用逻辑开始
     public Result<String> banInfo(Long id) {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
@@ -159,6 +164,7 @@ public class AdminServiceImpl implements AdminService {
             return ResultUtil.error(-1, "限流状态");
         }
         info.setIsDelete(1);
+        // 将状态设置为禁用，更新数据库
         infoDAO.updateById(info);
         return ResultUtil.success("限流成功");
     }
@@ -195,31 +201,39 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("删除成功");
     }
 
+    // 获取资讯审批列表开始
     public Result<List<InfoEntity>> getInfoReviewList() {
         QueryWrapper<InfoEntity> queryWrapper = new QueryWrapper<>();
+        // 获取状态为待审批的资讯列表
         queryWrapper.in("is_delete", 2, 3);
         List<InfoEntity> infoEntityList = infoDAO.selectList(queryWrapper);
         return ResultUtil.success(infoEntityList);
     }
 
+    // 通过资讯审批逻辑开始
     public Result<String> passInfo(Long id) {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
         if (info.getIsDelete().equals(0)) {
             return ResultUtil.error(-1, "启用状态");
         }
+        // 将资讯状态设为通过
         info.setIsDelete(0);
+        // 更新表
         infoDAO.updateById(info);
         return ResultUtil.success("审核通过");
     }
 
+    // 驳回资讯审批逻辑开始
     public Result<String> noPassInfo(Long id) {
         InfoEntity info = infoDAO.selectById(id);
         if (info == null) return ResultUtil.error(-1, "网络错误");
         if (info.getIsDelete().equals(3)) {
             return ResultUtil.error(-1, "驳回状态");
         }
+        // 将资讯状态设为驳回
         info.setIsDelete(3);
+        // 更新表
         infoDAO.updateById(info);
         return ResultUtil.success("审核驳回");
     }
@@ -269,7 +283,9 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(materialEntityList);
     }
 
+    // 素材详情页逻辑开始
     public Result<MaterialEntity> getMaterialDetail(Long id) {
+        // 获取素材详情
         MaterialEntity material = materialDAO.selectById(id);
         if (material != null) {
             return ResultUtil.success(material);
@@ -278,12 +294,14 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    // 启用素材逻辑开始
     public Result<String> noBanMaterial(Long id) {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(0)) {
             return ResultUtil.error(-1, "启用状态");
         }
+        // 将素材状态设为启用
         material.setIsDelete(0);
         materialDAO.updateById(material);
         return ResultUtil.success("启用成功");
@@ -299,12 +317,14 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("启用成功");
     }
 
+    // 限流素材逻辑开始
     public Result<String> banMaterial(Long id) {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(1)) {
             return ResultUtil.error(-1, "限流状态");
         }
+        // 将素材状态设为限流
         material.setIsDelete(1);
         materialDAO.updateById(material);
         return ResultUtil.success("限流成功");
@@ -321,7 +341,9 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("限流成功");
     }
 
+    // 删除素材逻辑开始
     public Result<String> deleteMaterial(Long id) {
+        // 删除素材
         materialDAO.deleteById(id);
         return ResultUtil.success("删除成功");
     }
@@ -357,58 +379,73 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success(materialEntityList);
     }
 
+    // 通过素材逻辑开始
     public Result<String> passMaterial(Long id) {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(0)) {
             return ResultUtil.error(-1, "启用状态");
         }
+        // 将素材状态设置为通过
         material.setIsDelete(0);
         materialDAO.updateById(material);
         return ResultUtil.success("审核成功");
     }
 
+    // 驳回素材逻辑开始
     public Result<String> noPassMaterial(Long id) {
         MaterialEntity material = materialDAO.selectById(id);
         if (material == null) return ResultUtil.error(-1, "网络错误");
         if (material.getIsDelete().equals(0)) {
             return ResultUtil.error(-1, "驳回状态");
         }
+        // 将素材状态设置为驳回
         material.setIsDelete(3);
         materialDAO.updateById(material);
         return ResultUtil.success("审核驳回");
     }
 
+    // 批量通过素材逻辑开始
     public Result<String> passMaterialList(List<Long> idList) {
+        // 批量循环
         for (Long id : idList) {
             MaterialEntity material = materialDAO.selectById(id);
             if (material == null) return ResultUtil.error(-1, "网络错误");
+            // 将选中的素材状态都设置为通过
             material.setIsDelete(0);
             materialDAO.updateById(material);
         }
         return ResultUtil.success("审核成功");
     }
 
+    // 批量通过素材逻辑开始
     public Result<String> noPassMaterialList(List<Long> idList) {
+        // 批量循环
         for (Long id : idList) {
             MaterialEntity material = materialDAO.selectById(id);
             if (material == null) return ResultUtil.error(-1, "网络错误");
+            // 将选中的素材状态都设置为驳回
             material.setIsDelete(3);
             materialDAO.updateById(material);
         }
         return ResultUtil.success("驳回成功");
     }
 
+    // 获取题目列表逻辑开始
     public Result<List<QuestionListVO>> getQuestionList() {
+        // 获取题目列表
         List<QuestionEntity> questionEntityList = questionDAO.selectList(null);
         List<QuestionListVO> questionListVOList = new ArrayList<>();
         for (QuestionEntity question : questionEntityList) {
             QueryWrapper<QuestionContentEntity> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("question_id", question.getId());
+            // 获取选项列表
             List<QuestionContentEntity> itemList = questionContentDAO.selectList(queryWrapper);
             QuestionListVO questionListVO = new QuestionListVO();
+            // 深拷贝
             BeanUtils.copyProperties(question, questionListVO);
             questionListVO.setQuestionContentEntityList(itemList);
+            // 将选项推入对应的题目中
             questionListVOList.add(questionListVO);
         }
         return ResultUtil.success(questionListVOList);
@@ -451,6 +488,8 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    // 更新题目逻辑开始
+    // 下行为出现异常时回滚数据库操作
     @Transactional(rollbackFor = Exception.class)
     public Result<String> updateQuestion(QuestionDTO questionDTO) {
         try {
