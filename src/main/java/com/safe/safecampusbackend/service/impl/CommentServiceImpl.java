@@ -1,7 +1,6 @@
 package com.safe.safecampusbackend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.safe.safecampusbackend.dao.CommentDAO;
 import com.safe.safecampusbackend.dao.InfoDAO;
 import com.safe.safecampusbackend.model.dto.CommentDTO;
