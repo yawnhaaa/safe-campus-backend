@@ -35,12 +35,10 @@ public class VisualServiceImpl implements VisualService {
         materialEntityQueryWrapper.eq("is_delete", 0);
         // 获取未被限流的素材
         List<MaterialEntity> materialEntityList = materialDAO.selectList(materialEntityQueryWrapper);
-
         // 计数器
         int imageCount = 0;
         int videoCount = 0;
         int audioCount = 0;
-
         // 计数器逻辑
         for (MaterialEntity materialEntity : materialEntityList) {
             if (materialEntity.getMaterialType() == 0) {
@@ -51,7 +49,6 @@ public class VisualServiceImpl implements VisualService {
                 audioCount++;
             }
         }
-
         // 初始化各可视化对象
         VisualVO imageVO = new VisualVO();
         imageVO.setTitle("本站图像素材数量");

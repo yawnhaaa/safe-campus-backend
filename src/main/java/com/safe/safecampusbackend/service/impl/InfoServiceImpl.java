@@ -62,13 +62,6 @@ public class InfoServiceImpl implements InfoService {
                 .toList();
         return ResultUtil.success(infoListVOList);
     }
-
-    /**
-     * 根据 id 拿到资讯内容
-     *
-     * @param id 资讯 id
-     * @return 资讯内容
-     */
     public Result<InfoVO> getInfoById(String id) {
         // 根据主键拿到资讯实体
         InfoEntity infoEntity = infoDAO.selectById(id);

@@ -65,7 +65,6 @@ public class CommentServiceImpl implements CommentService {
         if (Objects.equals(commentDTO.getCommentName(), "")) {
             return ResultUtil.error(-1, "网络错误");
         }
-
         // 初始化评论实体
         CommentEntity commentEntity = new CommentEntity();
         BeanUtils.copyProperties(commentDTO, commentEntity);

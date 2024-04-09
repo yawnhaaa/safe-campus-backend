@@ -418,7 +418,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("审核成功");
     }
 
-    // 批量通过素材逻辑开始
+    // 批量驳回素材逻辑开始
     public Result<String> noPassMaterialList(List<Long> idList) {
         // 批量循环
         for (Long id : idList) {
@@ -514,7 +514,6 @@ public class AdminServiceImpl implements AdminService {
                     }
                 }
             }
-
             return ResultUtil.success("更新成功");
         } catch (Exception e) {
             // Handle exception

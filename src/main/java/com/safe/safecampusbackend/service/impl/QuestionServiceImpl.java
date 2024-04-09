@@ -27,17 +27,14 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionEntity> filteredQuestionList = questionEntityList.stream()
                 .filter(question -> question.getIsDelete() != 1)
                 .toList();
-
         // 筛选掉 is_delete 为 1 的数据
         List<QuestionContentEntity> filteredQuestionContentList = questionContentEntityList.stream()
                 .filter(content -> content.getIsDelete() != 1)
                 .collect(Collectors.toList());
-
         // 过滤出至少有两条子表数据的问题
         List<QuestionEntity> filteredQuestionListWithEnoughContent = filteredQuestionList.stream()
                 .filter(question -> countContent(question.getId(), filteredQuestionContentList) >= 2)
                 .toList();
-
         // 将符合条件的问题转换为 QuestionListVO
         List<QuestionListVO> result = filteredQuestionListWithEnoughContent.stream()
                 .map(question -> {
@@ -59,7 +56,6 @@ public class QuestionServiceImpl implements QuestionService {
                     return vo;
                 })
                 .collect(Collectors.toList());
-
         return ResultUtil.success(result);
     }
 

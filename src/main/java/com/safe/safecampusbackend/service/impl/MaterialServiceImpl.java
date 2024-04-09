@@ -104,7 +104,6 @@ public class MaterialServiceImpl implements MaterialService {
             return ResultUtil.success(new ArrayList<>());
         }
     }
-
     public Result<MaterialVO> getMaterial(Long id) {
         // 通过主键找到素材
         MaterialEntity entity = materialDAO.selectById(id);
@@ -196,7 +195,6 @@ public class MaterialServiceImpl implements MaterialService {
                 logger.error(e);
             }
         }
-
         Date currentTime = new Date();
         entity.setIsDelete(2);
         entity.setMaterialDate(currentTime);
