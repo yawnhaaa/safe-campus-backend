@@ -238,6 +238,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultUtil.success("审核驳回");
     }
 
+    // 批量通过资讯逻辑开始
     public Result<String> passInfoList(List<Long> idList) {
         for (Long id : idList) {
             InfoEntity info = infoDAO.selectById(id);
