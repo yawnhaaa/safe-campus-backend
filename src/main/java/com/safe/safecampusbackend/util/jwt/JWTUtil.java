@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
 import java.security.Key;
 import java.util.Date;
 
@@ -33,21 +34,33 @@ public class JWTUtil {
     /**
      * JWT 校验
      *
-     * @param jwt             JWT
-     * @param expectedSubject 用户唯一标识符
+     * @param jwt JWT
      * @return 是否通过验证
      */
 
-    public static boolean validateJWT(String jwt, String expectedSubject) {
+    public static boolean validateJWT(String jwt) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt);
             Claims body = claimsJws.getBody();
-            String actualSubject = body.getSubject();
             Date expiration = body.getExpiration();
-            return actualSubject.equals(expectedSubject) && !expiration.before(new Date());
+            return !expiration.before(new Date());
         } catch (Exception e) {
             return false;
         }
     }
 
+    /**
+     * 传入jwt，解析出用户名
+     *
+     * @param jwt jwt
+     * @return 用户名
+     */
+    public static String extractSubject(String jwt) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody();
+        return claims.getSubject();
+    }
 }

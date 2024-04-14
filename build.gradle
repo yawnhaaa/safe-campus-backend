@@ -31,9 +31,9 @@ dependencies {
     // 引入 mybatis-plus
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.5'
     // 引入 Spring Security
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     // 引入 Servlet
-//    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
     // 引入 JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
