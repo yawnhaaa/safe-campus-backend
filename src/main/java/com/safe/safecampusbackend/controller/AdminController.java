@@ -6,7 +6,6 @@ import com.safe.safecampusbackend.model.entity.InfoEntity;
 import com.safe.safecampusbackend.model.entity.MaterialEntity;
 import com.safe.safecampusbackend.model.vo.QuestionListVO;
 import com.safe.safecampusbackend.model.vo.UserListAdminVO;
-import com.safe.safecampusbackend.service.AdminLoginService;
 import com.safe.safecampusbackend.service.AdminService;
 import com.safe.safecampusbackend.util.result.Result;
 import lombok.AllArgsConstructor;
