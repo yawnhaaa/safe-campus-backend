@@ -1,6 +1,5 @@
 package com.safe.safecampusbackend.controller;
 
-import com.safe.safecampusbackend.model.dto.AdminLoginDTO;
 import com.safe.safecampusbackend.model.dto.QuestionDTO;
 import com.safe.safecampusbackend.model.dto.UserUpdatePasswdDTO;
 import com.safe.safecampusbackend.model.entity.InfoEntity;
@@ -19,13 +18,7 @@ import java.util.List;
 @RequestMapping("/admin")
 @AllArgsConstructor
 public class AdminController {
-    private final AdminLoginService adminLoginService;
     private final AdminService adminService;
-
-    @PostMapping("/aLogin")
-    public Result<String> loginGetJWT(@RequestBody AdminLoginDTO adminLoginDTO) {
-        return adminLoginService.loginGetJWT(adminLoginDTO);
-    }
 
     @GetMapping("/getUserList")
     public Result<List<UserListAdminVO>> getUserList() {
