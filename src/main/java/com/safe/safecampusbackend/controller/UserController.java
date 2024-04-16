@@ -11,6 +11,7 @@ import com.safe.safecampusbackend.model.vo.UserLikeVO;
 import com.safe.safecampusbackend.service.AdminLoginService;
 import com.safe.safecampusbackend.service.UserService;
 import com.safe.safecampusbackend.util.result.Result;
+import com.safe.safecampusbackend.util.result.ResultUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,16 @@ public class UserController {
     @PostMapping("/adminLogin")
     public Result<String> loginGetJWT(@RequestBody AdminLoginDTO adminLoginDTO) {
         return adminLoginService.loginGetJWT(adminLoginDTO);
+    }
+
+    @GetMapping("/protected/verifyUser")
+    public Result<String> verifyUser() {
+        return ResultUtil.success("200");
+    }
+
+    @GetMapping("/admin/verifyAdmin")
+    public Result<String> verifyAdmin() {
+        return ResultUtil.success("200");
     }
 
     @PostMapping("/getCode")
