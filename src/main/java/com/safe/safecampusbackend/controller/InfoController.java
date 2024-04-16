@@ -28,7 +28,7 @@ public class InfoController {
         return infoService.getInfoById(id);
     }
 
-    @PostMapping("/handleInfo")
+    @PostMapping("/protected/handleInfo")
     public Result<String> handleInfo(@RequestBody InfoUserDTO infoUserDTO) {
         return infoService.handleInfo(infoUserDTO);
     }
@@ -38,7 +38,7 @@ public class InfoController {
         return infoService.getInfoUserStatus(infoUserStatusDTO);
     }
 
-    @PostMapping("/issueInfo")
+    @PostMapping("/protected/issueInfo")
     public Result<String> issueInfo(IssueInfoDTO issueInfoDTO) {
         return infoService.issueInfo(issueInfoDTO);
     }

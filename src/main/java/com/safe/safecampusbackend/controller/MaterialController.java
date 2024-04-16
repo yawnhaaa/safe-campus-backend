@@ -43,7 +43,7 @@ public class MaterialController {
         return materialService.downloadMaterial(id);
     }
 
-    @PostMapping("/issueMaterial")
+    @PostMapping("/protected/issueMaterial")
     public Result<String> issueMaterial(IssueMaterialDTO issueMaterialDTO) {
         return materialService.issueMaterial(issueMaterialDTO);
     }

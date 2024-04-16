@@ -19,7 +19,7 @@ public class CommentController {
         return commentService.getComment(infoId);
     }
 
-    @PostMapping("/sendComment")
+    @PostMapping("/protected/sendComment")
     public Result<String> sendComment(@RequestBody CommentDTO commentDTO) {
         return commentService.sendComment(commentDTO);
     }

@@ -43,12 +43,12 @@ public class UserController {
         return userService.getEmailCode(request.get("email"));
     }
 
-    @GetMapping("/getUserDetail/{id}")
+    @GetMapping("/protected/getUserDetail/{id}")
     public Result<UserDetailVO> getUserDetail(@PathVariable Long id) {
         return userService.getUserDetail(id);
     }
 
-    @PostMapping("/updateUserDetail")
+    @PostMapping("/protected/updateUserDetail")
     public Result<String> updateUserDetail(@RequestBody UserDetailDTO userDetailDTO) {
         return userService.updateUserDetail(userDetailDTO);
     }
