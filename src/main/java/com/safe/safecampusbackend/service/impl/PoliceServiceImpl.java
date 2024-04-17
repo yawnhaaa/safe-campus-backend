@@ -54,7 +54,8 @@ public class PoliceServiceImpl implements PoliceService {
         for (PoliceEntity entity : policeEntityList) {
             PoliceAdminListVO policeAdminListVO = new PoliceAdminListVO();
             BeanUtils.copyProperties(entity, policeAdminListVO);
-            policeAdminListVO.setPoint(Util.stringToDoubleArray(entity.getLongLa()));
+            policeAdminListVO.setLongitude(Util.stringToDoubleArray(entity.getLongLa())[0]);
+            policeAdminListVO.setLatitude(Util.stringToDoubleArray(entity.getLongLa())[1]);
             policeAdminListVOList.add(policeAdminListVO);
         }
         return ResultUtil.success(policeAdminListVOList);

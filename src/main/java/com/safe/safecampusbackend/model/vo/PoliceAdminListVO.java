@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class PoliceAdminListVO {
     private Long id;
-    private Double[] point;
+    private Double longitude;
+    private Double latitude;
     private String name;
     private String address;
     private String intro;
