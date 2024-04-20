@@ -8,7 +8,7 @@ public class SafeCampusBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SafeCampusBackendApplication.class, args);
-        System.out.println("---------------------------反诈校园，启动！---------------------------");
+        System.out.println("--------------------------反诈校园，启动！---------------------------");
     }
 
 }
